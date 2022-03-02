@@ -1,0 +1,18 @@
+<div *ngIf="TipoGrupo!=='C'" align="center" class="principal-container">
+
+<button class="btn_amarelo_grande" (click)="cozinha()">PEDIDOS COZINHA</button>&nbsp;&nbsp;
+<button class="btn_amarelo_grande" (click)="geral()">ENTRADA DE PEDIDOS</button>
+
+</div>
+<!--<img [src]="user.photoUrl">
+<div>
+  <h4>{{ user.name }}</h4>
+  <p>{{ user.email }}</p>
+</div>-->
+
+<div *ngIf="TipoGrupo=='C'" align="center">
+    <div class="pprice">Pedidos realizado com sucesso!</div>
+    <hr>
+    <button (click)="pedidos()" type="button" class="bcompra2">Continuar comprando...</button><br/><br/>
+    <button (click)="status()"  type="button" class="bcompra2">Acompanhar o Status...</button>
+</div>

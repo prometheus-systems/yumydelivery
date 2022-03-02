@@ -1,0 +1,39 @@
+﻿<div [@bounce]="bounce">
+<div align="left">
+<button id="btnback1" name="btnback1" class="btn_amarelo" matTooltip="Voltar" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button>
+</div> 
+<div class="example-container" align="center">
+  <div class="barheader">{{'RELATÓRIO DE' | translate}} {{'Sabores' | translate | uppercase}}</div>
+  <div><p>{{apiService.strParametros}}</p></div>
+      <table class="table table-borderless" align="center" width="100%"> 
+        <thead class="thead-light"> 
+        <th>{{'Código' | translate}}</th>
+        <th>{{'Nome' | translate}}</th>
+        <th>{{'Cardápio' | translate}}</th>
+        <th>{{'Descrição' | translate}}</th>
+        <th>{{'Valor Adicional' | translate}}</th>
+        </thead> 
+        <tbody> 
+          <tr *ngFor="let sabores of apiService.arrsabores"> 
+           <td>{{sabores.sab_codigo}}</td>
+           <td>{{sabores.sab_nome}}</td>
+           <td>{{sabores.car_nome}}</td>
+           <td>{{sabores.sab_descricao}}</td>
+           <td>{{sabores.sab_valor}}</td>
+          </tr> 
+          <tr id="thead-light" *ngIf="tem_total">
+          <td>{{'TOTAL GERAL' | translate}}</td> 
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr> 
+        </tbody> 
+      </table> 
+  <div align="right"> 
+     <button [disabled]=true id="btnchart" name="btnchart" class="btn_amarelo" matTooltip="{{'Gráficos' | translate}}" (click)="GoogleChart()"><mat-icon>pie_chart</mat-icon></button> 
+     <button id="btnprint" name="btnprint" class="btn_amarelo" matTooltip="{{'Imprimir' | translate}}" (click)="Imprimir()"><mat-icon>printer</mat-icon></button> 
+     <button id="btnback" name="btnback" class="btn_amarelo" matTooltip="{{'Voltar' | translate}}" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button> 
+  </div> 
+</div> 
+</div>

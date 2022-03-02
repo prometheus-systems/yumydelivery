@@ -1,0 +1,36 @@
+﻿ 
+<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formParRel" (submit)="onSubmit(form)"> 
+ <hr> 
+ <div class="barheader"class="text-center">{{'FILTRO RELATÓRIO' | translate}} {{'Bonificação' | translate | uppercase}}</div> 
+ <hr> 
+    <div class="example-container"> 
+    <mat-form-field> 
+      <mat-label>{{'Nome' | translate}}</mat-label>
+      <mat-select name="ven_nome" #ven_nome="ngModel" [(ngModel)]="apiService.formParRel.ven_nome"> 
+        <mat-option [value]="">TODAS</mat-option> 
+        <mat-option *ngFor="let vendedores of arrvendedores" [value]="vendedores.ven_nome">
+          {{vendedores.ven_nome}} 
+        </mat-option> 
+      </mat-select> 
+    </mat-form-field> 
+  </div> 
+ 
+    <div class="example-container"> 
+    <mat-form-field> 
+      <mat-label>{{'Nome' | translate}}</mat-label>
+      <mat-select name="car_nome" #car_nome="ngModel" [(ngModel)]="apiService.formParRel.car_nome"> 
+        <mat-option [value]="">TODAS</mat-option> 
+        <mat-option *ngFor="let cardapio of arrcardapio" [value]="cardapio.car_nome">
+          {{cardapio.car_nome}} 
+        </mat-option> 
+      </mat-select> 
+    </mat-form-field> 
+  </div> 
+ 
+<div class="button-row"> 
+   <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Imprimir' | translate}}</button> 
+   <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+</div> 
+</form> 
+</div>

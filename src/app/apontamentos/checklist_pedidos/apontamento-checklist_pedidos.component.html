@@ -1,0 +1,58 @@
+﻿
+<div [@bounce]="bounce">
+  <div class="example-container"> 
+    <div class="barheader">{{'CheckList Pedidos' | translate}}</div>
+    <div><p>{{apiService.strParametros}}</p></div>  
+    <table mat-table [dataSource]="apiService.dataSource" class="mat-elevation-z8">  
+      <ng-container matColumnDef="select">  
+        <th mat-header-cell *matHeaderCellDef> 
+          <mat-checkbox (change)="$event ? masterToggle() : null" 
+                        [checked]="apiService.selection.hasValue() && isAllSelected()" 
+                        [indeterminate]="apiService.selection.hasValue() && !isAllSelected()"  
+                        [aria-label]="checkboxLabel()"> 
+          </mat-checkbox> 
+        </th> 
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"  
+                        (change)="$event ? apiService.selection.toggle(row) : null" 
+                        [checked]="apiService.selection.isSelected(row)" 
+                        [aria-label]="checkboxLabel(row)">   
+          </mat-checkbox> 
+        </td> 
+        <td mat-footer-cell *matFooterCellDef> Total </td> 
+      </ng-container> 
+      <ng-container matColumnDef="ped_codigo"> 
+        <th mat-header-cell *matHeaderCellDef>{{'Código' | translate}}</th> 
+        <td mat-cell *matCellDef="let element">{{element.ped_codigo}} </td> 
+      <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container> 
+      <ng-container matColumnDef="ped_datahora"> 
+        <th mat-header-cell *matHeaderCellDef>{{'Data/Hora' | translate}}</th> 
+        <td mat-cell *matCellDef="let element">{{element.ped_datahora}} </td> 
+      <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container> 
+      <ng-container matColumnDef="ped_datapronto"> 
+        <th mat-header-cell *matHeaderCellDef>{{'Data/Hora Pronto' | translate}}</th> 
+        <td mat-cell *matCellDef="let element">{{element.ped_datapronto}} </td> 
+      <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container> 
+      <ng-container matColumnDef="status"> 
+            <th mat-header-cell *matHeaderCellDef>Status</th> 
+            <td mat-cell *matCellDef="let element">{{element.status}} </td>  
+            <td mat-footer-cell *matFooterCellDef></td>  
+      </ng-container>  
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> 
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"  
+      [ngClass]="{'make-green':row.status=='start', 'make-red':row.status=='finally', 'make-gold':row.status=='stop', 'make-blue':row.status=='continue'}" 
+      > 
+    </tr> 
+      <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> 
+    </table>  
+        <hr>  
+        <div class="button-row">  
+          <button type="button" (click)="onGravar()" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button> 
+          <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+      </div> 
+  </div>  
+</div>

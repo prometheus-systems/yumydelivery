@@ -1,0 +1,109 @@
+﻿<div class="example-container" align="center">
+  <div align="center"><div class="barheader">PERMISSÕES</div>
+  <hr>
+
+  <div class="example-container"> 
+    <div class="example-container"> 
+
+      <div class="row">
+        <div class="col-sm-1">  
+          <mat-icon>group</mat-icon>
+        </div>
+        <div class="col-sm">  
+          <select placeholder="GRUPO" class="browser-default custom-select" name="grupo" #grupo="ngModel" [(ngModel)]="apiService.grupo" (change)="applyFilterGroup($event.target.value)"> 
+            <option *ngFor="let grupo of arrgrupos | async" [value]="grupo.gus_descricao">
+              {{grupo.gus_descricao}} 
+            </option> 
+          </select> 
+        </div>
+        <div class="col-sm">  
+          <mat-icon>search</mat-icon>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1">  
+          <mat-icon>pages</mat-icon>
+        </div>
+        <div class="col-sm">  
+          <select placeholder="TELA" class="browser-default custom-select" name="tela" #tela="ngModel" [(ngModel)]="apiService.tabela" (change)="applyFilterTabela($event.target.value)"> 
+            <option *ngFor="let tabela of arrtabelas | async" [value]="tabela.tab_nome">
+              {{tabela.tab_titulo}}
+            </option> 
+          </select> 
+        </div>
+        <div class="col-sm">  
+          <mat-icon>search</mat-icon>
+        </div>
+      </div>
+     
+        <div class="row">
+          <div class="col-sm-1">  
+            <mat-icon>menu_book</mat-icon>
+          </div>
+          <div class="col-sm">   
+            <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="CONSULTAR" >
+          </div>
+          <div class="col-sm">  
+            <mat-icon>search</mat-icon>
+          </div>
+        </div>   
+ 
+    </div> 
+    <hr>
+  
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <!--COLUNA TABELA LISTA PTE_ALTERAR-->
+    <ng-container matColumnDef="pte_alterar"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Alterar </th> 
+      <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="element.pte_alterar && element.tipo=='Cadastro'">checked</mat-icon></td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA PTE_CODIGO-->
+    <ng-container matColumnDef="pte_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th> 
+      <td mat-cell *matCellDef="let element"> {{element.pte_codigo}} </td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA PTE_CODIGO-->
+    <ng-container matColumnDef="gus_descricao"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo </th> 
+        <td mat-cell *matCellDef="let element"> {{element.gus_descricao}} </td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA PTE_EXCLUIR-->
+    <ng-container matColumnDef="pte_excluir"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Excluir </th> 
+      <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="element.pte_excluir && element.tipo=='Cadastro'">checked</mat-icon></td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA PTE_INSERIR-->
+    <ng-container matColumnDef="pte_inserir"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Inserir </th> 
+      <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="element.pte_inserir && element.tipo=='Cadastro'">checked</mat-icon></td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA PTE_VISUALIZAR-->
+    <ng-container matColumnDef="pte_visualizar"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Visualizar </th> 
+      <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="element.pte_visualizar">checked</mat-icon></td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA TAB_TITULO-->
+    <ng-container matColumnDef="tab_titulo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tela</th> 
+      <td mat-cell *matCellDef="let element"> {{element.tab_titulo}} </td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA TAB_TITULO-->
+
+    <ng-container matColumnDef="tipo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo</th> 
+      <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+    </ng-container>     
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+      [ngClass]="{'make-crud':row.tipo=='Cadastro', 'make-report':row.tipo=='Relatorio', 'make-splash':row.tipo=='Apontamento'}" 
+      (click)="editpermissoes_tabelas(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div>
+   <!-- <button [type="button" (click)="filtrorelpermissoes_tabelas()" class="btn_amarelo" ><i class="fa fa-close"></i>Relatório</button>-->
+  </div> 
+</div> 

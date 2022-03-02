@@ -1,0 +1,466 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+
+  <div *ngIf="TipoGrupo=='C'" align="center" >
+    <mat-horizontal-stepper #stepper>
+      <mat-step *ngIf="apiService.tela==0">
+        <br>
+        <div *ngIf="Device=='M'||Device=='T'">
+          <cdk-virtual-scroll-viewport class="virtual-mobile" itemSize="100" >
+
+            <mat-grid-list cols="3">                        
+              <mat-grid-tile *ngFor="let categorie of arrCategories">
+                <div>
+                  <div class="titcategories">
+                    <p>{{categorie.cat_nome | unescape}}</p>
+                  </div>
+                  <div align="center" class="categories">
+                    <a (click)="selCategories(categorie.cat_codigo,stepper)"><img [src]="categorie.cat_imagem"></a>
+                  </div>
+
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+  
+  
+          </cdk-virtual-scroll-viewport>
+        </div>
+        <div *ngIf="Device=='D'">
+          <cdk-virtual-scroll-viewport class="virtual-desktop" itemSize="100" >
+          
+            <mat-grid-list cols="6">                        
+              <mat-grid-tile *ngFor="let categorie of arrCategories">
+                <div>
+                  <div class="titcategories">
+                    <p>{{categorie.cat_nome | unescape}}</p>
+                  </div>
+                  <div align="center" class="categories">
+                    <a (click)="selCategories(categorie.cat_codigo,stepper)"><img [src]="categorie.cat_imagem"></a>
+                  </div>
+
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+  
+  
+          </cdk-virtual-scroll-viewport>
+        </div>
+        
+      </mat-step>  
+      <!--***************************************-->
+      <mat-step>
+        <!--SEARCH-->
+        <div class="barheader">
+          
+            <div align="center" class="example-container"> 
+              <input type="search" (keyup)="applyFilter($event.target.value)" placeholder="Buscar Produtos" class="input-branco"><mat-icon>search</mat-icon> 
+            </div> 
+
+          
+        </div>
+        <!--SELLES-->
+        <div align="center" class="pos_seller">
+          <cdk-virtual-scroll-viewport orientation="horizontal" class="sellers" itemSize="200" >
+            <table align="center"> 
+              <tr>
+                <td *ngFor="let seller of arrSellers">
+                  <div align="center" class="scroll">
+                    <a (click)="onSeller(seller.ven_codigo,seller.ven_horario)" matTooltip="{{seller.ven_nome | unescape}}"><img [src]="seller.ven_logo"></a>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          </cdk-virtual-scroll-viewport>
+        </div>
+        <!--PRODUCTS-->
+        <div align="center" class="pos_products">
+          <cdk-virtual-scroll-viewport orientation="horizontal" class="products" itemSize="400" >
+            <table align="center">
+              <tr>
+                <td *ngFor="let product of arrProductsFiltred ; let i=index;">
+                  <div class="pborder" align="center">
+                    
+                    <div align="center" class="scroll_products">
+                      <div width="100%">
+                      <div width="100%" class="seller" *ngIf="product.ven_logo!=''"><img matTooltip="{{product.ven_nome | unescape}}" [src]="product.ven_logo"></div>
+                      <a (click)="onProducts(product.car_imagen,product.car_codigo,product.car_nome,product.car_descricao,product.car_valor,product.car_estoque,product.cat_nome,product.ven_nome)"><div center><img align="center"[src]="product.car_imagen"></div></a>
+                    </div>
+                    </div>
+                    <div class="indisponivel" *ngIf="product.car_estoque==0">INDISPONÍVEL</div>
+                    <div class="ptitle">{{product.car_nome | unescape}}</div>
+                    <div class="pdescription">{{product.car_desc | unescape}}</div>
+                    <div class="pprice">{{product.car_valor | currency:'BRL'}}</div>
+                    <div class="besquerda" *ngIf="product.tem_sabor"> <button type="button" class="bcompra" (click)="sabores(product.car_codigo)">Sabores</button></div>
+                    <div class="besquerda"><button type="button" [disabled]="product.car_estoque==0 || nohorario==false" class="bcompra" (click)="item_carrinho(i,product.car_codigo,product.car_imagen,product.car_nome,product.car_descricao,product.car_valor,product.car_estoque,product.ven_horario,product.ven_codigo)">Comprar </button></div>
+
+                  </div>
+
+                </td>
+              </tr>
+
+            </table>
+          </cdk-virtual-scroll-viewport>
+        </div>
+        <!--BARRA FERRAMENTAS-->
+        <div *ngIf="apiService.temItem" align="center" class="frase">0{{apiService.carrinhos}} ITENS - {{apiService.formData.ped_total | currency:'BRL'}}</div>
+        
+        <button type="button" [disabled]="apiService.Itemsitens.length==0" *ngIf="apiService.temItem" class="finalizar" (click)="Finalizar(stepper)"> 
+          Finalizar 
+        </button>
+
+        <div class="barfooter" align="center">
+          
+          
+          <button type="button" mat-icon-button matTooltip="{{'Categorias' | translate}}" aria-label="Categorias" (click)="categorias(stepper)"> 
+            <mat-icon>drag_indicator</mat-icon> 
+          </button> 
+
+          <button type="button" mat-icon-button matTooltip="{{'Inicio' | translate}}" aria-label="Inicio" (click)="inicio(stepper)"> 
+            <mat-icon>home</mat-icon> 
+          </button> 
+
+          <button type="button" mat-icon-button matTooltip="{{'Histórico Pedidos' | translate}}" aria-label="Pedidos" (click)="pedidos()"> 
+            <mat-icon>grading</mat-icon> 
+          </button> 
+
+          <button type="button" mat-icon-button matTooltip="{{'Carrinho' | translate}}" aria-label="Carrinho" (click)="carrinho()"> 
+            <mat-icon>shopping_cart</mat-icon> 
+          </button> 
+
+          <button  type="button" *ngIf="!apiService.temItem" mat-icon-button matTooltip="{{'Perfil' | translate}}" aria-label="Perfil" (click)="perfil()"> 
+            <mat-icon>account_circle</mat-icon> 
+          </button> 
+
+
+
+          <button type="button" mat-icon-button matTooltip="{{'Sair' | translate}}" aria-label="Sair" (click)="Logout()"> 
+            <mat-icon>close</mat-icon> 
+          </button> 
+        </div>
+      </mat-step>  
+      <!--FINALIZAR-->
+      <mat-step>
+
+          <div width="100%" class="ptitle" align="center">ITENS DO PEDIDO</div>
+          <cdk-virtual-scroll-viewport [ngClass]="{'virtual-mobile2': Device=='M', 'virtual-desktop2': Device=='D'}" itemSize="100" >
+            <table align="center" width="95%"> 
+            <tr *ngFor="let itemitens of apiService.Itemsitens; let i=index;">
+              <td colspan="4">
+                <div class="pborder2" align="center" width="100%">
+                  <div *ngIf="Device=='M'" width="100%">
+                    <table align="center" width="100%">
+                      <tr width="100%"><td width="100%" class="ptitle">{{itemitens.car_nome | unescape}}</td></tr>                       
+                      <tr width="100%">
+                        <td width="100%">     
+                          <table width="100%">      
+                            <tr>              
+                              <td class="pprice" id="f-esquerda">Preço {{itemitens.ite_preco | currency:'BRL'}}</td> 
+                              <td class="pprice" id="f-direita">Qtde. {{itemitens.ite_qtde}}</td> 
+                            </tr>
+                            <tr>  
+                              <td class="pprice" id="f-esquerda">SubTotal {{itemitens.ite_subtotal | currency:'BRL'}}</td> 
+                              <td id="f-direita"><a matTooltip="{{'Excluir' | translate}}"  (click)="onDeleteItensitens(itemitens.ite_codigo,i)"><mat-icon>delete</mat-icon></a></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr> 
+                    </table> 
+                  </div>
+
+                  <div *ngIf="Device=='D'" width="100%">
+                    <table align="center" width="100%">  
+                      <tr width="100%"><td class="ptitle" colspan="4">{{itemitens.car_nome | unescape}}</td></tr>                       
+                      <tr width="100%">
+                         
+                            <td class="pprice">Preço {{itemitens.ite_preco | currency:'BRL'}}</td> 
+                            <td class="pprice">Qtde. {{itemitens.ite_qtde}}</td> 
+              
+                            <td class="pprice">SubTotal {{itemitens.ite_subtotal | currency:'BRL'}}</td> 
+                            <td><a matTooltip="{{'Excluir' | translate}}"  (click)="onDeleteItensitens(itemitens.ite_codigo,i)"><mat-icon>delete</mat-icon></a></td>
+                      </tr> 
+                    </table> 
+                  </div>
+              
+              </div>
+              </td>
+            </tr>  
+            <tr><td class="pprice">TOTAL</td><td colspan="2"></td><td class="pprice">{{apiService.formData.ped_total | currency:'BRL'}}</td></tr>
+           </table>
+            </cdk-virtual-scroll-viewport>
+              <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_forma_pagto">
+              <label class="example-margin"><b>{{'Forma Pgto.' | translate}}:</b></label> 
+                <mat-radio-group [disabled]="apiService.formDisabled.ped_forma_pagto" name="ped_forma_pagto" #ped_forma_pagto="ngModel" [(ngModel)]="apiService.formData.ped_forma_pagto"> 
+                  <table>
+                    <tr>
+                      <td><mat-radio-button value="CARTAO" class="example-margin">C. CRÉDITO</mat-radio-button></td>
+                      <td><mat-radio-button value="DEBITO" class="example-margin">C. DÉBITO</mat-radio-button>
+                    </tr>
+                    <tr>
+                      <td><mat-radio-button value="DINHEIRO" class="example-margin">DINHEIRO</mat-radio-button></td>
+                      <td><mat-radio-button value="VALE" class="example-margin">VALE ALIMENTAÇÃO</mat-radio-button></td>
+                    </tr>
+                  </table>
+                </mat-radio-group> 
+              </div> 
+        
+            
+              <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_tipo_pagto">
+              <label class="example-margin"><b>{{'Tipo Pagto.' | translate}}:</b></label> 
+              <br/>
+              <!--
+                <mat-radio-group  [disabled]="apiService.formDisabled.ped_tipo_pagto" name="ped_tipo_pagto" #ped_tipo_pagto="ngModel" [(ngModel)]="apiService.formData.ped_tipo_pagto"> 
+              
+                  <mat-radio-button value="ONLINE" class="example-margin">ON-LINE</mat-radio-button>
+                  <mat-radio-button value="OFFLINE" class="example-margin">OFF-LINE</mat-radio-button>
+                </mat-radio-group> 
+-->
+                <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_usarbonificacao"> 
+                  <mat-checkbox [disabled]="apiService.formDisabled.ped_usarbonificacao" name="ped_usarbonificacao" #ped_usarbonificacao="ngModel" [(ngModel)]="apiService.formData.ped_usarbonificacao">{{'Usar Bonificação' | translate}}</mat-checkbox>
+                </div> 
+                
+              </div>
+              <div class="example-container"> 
+                <mat-form-field>
+                  <textarea matInput placeholder="{{'Observações' | translate}}" name="ped_obs" #ped_obs="ngModel" [(ngModel)]="apiService.formData.ped_obs"></textarea> 
+                </mat-form-field>
+              </div>
+
+<!-- ////////////////////////////////////////////////////////////////////-->
+              <div *ngIf="temEndereco">
+              <div align="center" class="pdescripiton">Endereço Atual:</div>
+              <div align="center" class="pdescription">{{atual | unescape}}</div>
+              </div> 
+              <mat-radio-group name="endereco1" #endereco1="ngModel" [(ngModel)]="endereco" *ngIf="temEndereco">               
+                <mat-radio-button value="ATUAL" class="example-margin">Atual</mat-radio-button>
+                <mat-radio-button value="OUTRO" class="example-margin">Outro</mat-radio-button>
+              </mat-radio-group> <br/>
+            
+              <button *ngIf="endereco=='OUTRO'" class="bcompra" type="button" (click)="getAddressFromLatLng()">Localização</button>&nbsp;
+              <button *ngIf="temEndereco" class="bcompra" type="button" (click)="editarEndereco()">Endereço</button>              
+             <!----------------------- -->
+             <br/><br/>
+              <button *ngIf="apiService.formData.ped_tipo_pagto=='ONLINE'" class="bcompra" type="button" (click)="pagamento(apiService.formData.ped_total)">Pagamento</button>&nbsp;
+            <button class="bcompra" type="submit">Concluir...</button>
+ 
+        
+
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+  <div *ngFor="let teste of apiService.arrhistPedidos"></div>
+
+  <!--******************************************************************-->
+  <!--******************************************************************-->
+  <!--******************************************************************-->
+  <!--*********************M Ó D U L O - V E N D A S********************-->
+  <!--******************************************************************-->
+  <!--******************************************************************-->
+  <!--******************************************************************-->
+  <div *ngIf="TipoGrupo=='V'||TipoGrupo=='A'"> 
+    <div align="center">
+      <hr>  
+      <div class="example-container" align="center">  
+        <div class="row"> 
+          <div class="col-sm"> 
+            <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Pedidos' | translate | uppercase}}</div> 
+            <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Pedidos' | translate | uppercase}}</div>  
+          </div>
+          <div class="col-sm-0"> 
+            <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('pedidos')"><mat-icon>help</mat-icon></a>  
+          </div> 
+        </div>  
+      </div>  
+      <hr>  
+      <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="ped_codigo" #ped_codigo="ngModel" [(ngModel)]="apiService.formData.ped_codigo"> 
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+        <mat-form-field> 
+          <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="ped_codigo" #ped_codigo="ngModel" [(ngModel)]="apiService.formData.ped_codigo" > 
+        </mat-form-field> 
+      </div> 
+      <div *ngIf="TipoGrupo=='A'">
+      <div class="example-container" align="center">  
+        <mat-form-field> 
+          <mat-label>{{'Vendedor' | translate}}</mat-label>
+          <mat-select name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+            <mat-option *ngFor="let vendedor of arrvendedores | async" [value]="vendedor.ven_codigo">
+              {{vendedor.ven_nome | unescape}} 
+            </mat-option> 
+          </mat-select> 
+          <mat-error>{{'Vendedor' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+        </mat-form-field> 
+      </div> 
+    </div>
+
+      <div class="example-container" align="center">  
+        <mat-form-field> 
+          <mat-label>{{'Cliente' | translate}}</mat-label>
+          <mat-select name="usu_codigo" #usu_codigo="ngModel" [(ngModel)]="apiService.formData.usu_codigo"> 
+            <mat-option *ngFor="let usuario of arrusuarios | async" [value]="usuario.usu_codigo">
+              {{usuario.usu_nome | unescape}} 
+            </mat-option> 
+          </mat-select> 
+          <mat-error>{{'Usuário' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+        </mat-form-field> 
+      </div> 
+      
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='U'">
+        <mat-form-field *ngIf="apiService.formVisible.ped_datahora"> 
+          <input [readonly]="apiService.formDisabled.ped_datahora" matInput placeholder="{{'Data/Hora' | translate}}" name="ped_datahora" #ped_datahora="ngModel" [(ngModel)]="apiService.formData.ped_datahora"> 
+          <mat-error>Data/Hora {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+      </div> 
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='I'"> 
+        <mat-form-field *ngIf="apiService.formVisible.ped_datahora"> 
+          <input matInput [disabled]="apiService.formDisabled.ped_datahora" [matDatepicker]="ped_datahora" placeholder="{{'Data/Hora' | translate}}" name="ped_datahora" [(ngModel)]="apiService.formData.ped_datahora">  
+          <mat-datepicker-toggle matSuffix [for]="ped_datahora"></mat-datepicker-toggle> 
+          <mat-datepicker #ped_datahora></mat-datepicker> 
+          <mat-error>Data/Hora {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+      </div> 
+    
+            <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_forma_pagto">
+      <label class="example-margin"><b>{{'Forma Pgto.' | translate}}:</b></label> 
+        <mat-radio-group [disabled]="apiService.formDisabled.ped_forma_pagto" name="ped_forma_pagto" #ped_forma_pagto="ngModel" [(ngModel)]="apiService.formData.ped_forma_pagto"> 
+          <mat-radio-button value="CARTAO" class="example-margin">C. CRÉDITO</mat-radio-button>
+          <mat-radio-button value="DEBITO" class="example-margin">C. DÉBITO</mat-radio-button>
+          <mat-radio-button value="DINHEIRO" class="example-margin">DINHEIRO</mat-radio-button>
+          <mat-radio-button value="VALE" class="example-margin">VALE ALIMENTAÇÃO</mat-radio-button>
+        </mat-radio-group> 
+      </div> 
+
+            <div class="example-container"> 
+        <mat-form-field *ngIf="apiService.formVisible.ped_total"> 
+          <input [readonly]="apiService.formDisabled.ped_total" matInput type="number" min="0.0" placeholder="{{'Total' | translate}}"   name="ped_total" #ped_total="ngModel" [(ngModel)]="apiService.formData.ped_total" > 
+          <mat-error>{{'Total' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+        </mat-form-field> 
+      </div> 
+    
+            <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_tipo_pagto">
+      <label class="example-margin"><b>{{'Tipo Pagto.' | translate}}:</b></label> 
+        <mat-radio-group [disabled]="apiService.formDisabled.ped_tipo_pagto" name="ped_tipo_pagto" #ped_tipo_pagto="ngModel" [(ngModel)]="apiService.formData.ped_tipo_pagto"> 
+          <mat-radio-button value="ONLINE" class="example-margin">ON-LINE</mat-radio-button>
+          <mat-radio-button value="OFFLINE" class="example-margin">OFF-LINE</mat-radio-button>
+        </mat-radio-group> 
+      </div> 
+
+            <div class="example-container" *ngIf="apiService.formData.status_reg=='U'">
+        <mat-form-field *ngIf="apiService.formVisible.ped_datapronto"> 
+          <input [readonly]="apiService.formDisabled.ped_datapronto" matInput placeholder="{{'Data/Hora Pronto' | translate}}" name="ped_datapronto" [(ngModel)]="apiService.formData.ped_datapronto"> 
+          <mat-error>Data/Hora Pronto {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+      </div> 
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='I'"> 
+        <mat-form-field *ngIf="apiService.formVisible.ped_datapronto"> 
+          <input matInput [disabled]="apiService.formDisabled.ped_datapronto" [matDatepicker]="ped_datapronto" placeholder="{{'Data/Hora Pronto' | translate}}" name="ped_datapronto" [(ngModel)]="apiService.formData.ped_datapronto">  
+          <mat-datepicker-toggle matSuffix [for]="ped_datapronto"></mat-datepicker-toggle> 
+          <mat-datepicker #ped_datapronto></mat-datepicker> 
+          <mat-error>Data/Hora Pronto {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+        <a matTooltip="Data/Hora Atual" aria-label="" (click)="onDataHora0()"> 
+          <mat-icon>calendar_today</mat-icon> 
+        </a> 
+      </div> 
+    
+      <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_status">
+      <label class="example-margin"><b>{{'Status' | translate}}:</b></label> 
+        <mat-radio-group [disabled]="apiService.formDisabled.ped_status" name="ped_status" #ped_status="ngModel" [(ngModel)]="apiService.formData.ped_status"> 
+          <mat-radio-button value="PEDIDO" class="example-margin">PEDIDO</mat-radio-button>
+          <mat-radio-button value="PRONTO" class="example-margin">PRONTO</mat-radio-button>
+          <mat-radio-button value="RETIRADO" class="example-margin">RETIRADO</mat-radio-button>
+          <mat-radio-button value="ENTREGUE" class="example-margin">ENTREGUE</mat-radio-button>
+        </mat-radio-group> 
+      </div> 
+
+      <div class="add-bottom-padding" *ngIf="apiService.formVisible.ped_usarbonificacao"> 
+        <mat-checkbox [disabled]="apiService.formDisabled.ped_usarbonificacao" name="ped_usarbonificacao" #ped_usarbonificacao="ngModel" [(ngModel)]="apiService.formData.ped_usarbonificacao">{{'Usar Bonificação' | translate}}</mat-checkbox>
+      </div> 
+
+            <div class="example-container" *ngIf="apiService.formData.status_reg=='U'">
+        <mat-form-field *ngIf="apiService.formVisible.ped_retirado"> 
+          <input [readonly]="apiService.formDisabled.ped_retirado" matInput placeholder="{{'Data/Hora Retirado' | translate}}" name="ped_retirado" #ped_retirado="ngModel" [(ngModel)]="apiService.formData.ped_retirado"> 
+        </mat-form-field> 
+      </div> 
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='I'"> 
+        <mat-form-field *ngIf="apiService.formVisible.ped_retirado"> 
+          <input matInput [disabled]="apiService.formDisabled.ped_retirado" [matDatepicker]="ped_retirado" placeholder="{{'Data/Hora Retirado' | translate}}" name="ped_retirado" [(ngModel)]="apiService.formData.ped_retirado">  
+          <mat-datepicker-toggle matSuffix [for]="ped_retirado"></mat-datepicker-toggle> 
+          <mat-datepicker #ped_retirado></mat-datepicker> 
+        </mat-form-field>
+        <a matTooltip="Data/Hora Atual" aria-label="" (click)="onDataHora1()"> 
+          <mat-icon>calendar_today</mat-icon> 
+        </a> 
+      </div> 
+    
+            <div class="example-container" *ngIf="apiService.formData.status_reg=='U'">
+        <mat-form-field *ngIf="apiService.formVisible.ped_entregue"> 
+          <input [readonly]="apiService.formDisabled.ped_entregue" matInput placeholder="{{'Data/Hora Entregue' | translate}}" name="ped_entregue" #ped_entregue="ngModel" [(ngModel)]="apiService.formData.ped_entregue"> 
+          <mat-error>Data/Hora Entregue {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+      </div> 
+      <div class="example-container" *ngIf="apiService.formData.status_reg=='I'"> 
+        <mat-form-field *ngIf="apiService.formVisible.ped_entregue"> 
+          <input matInput [disabled]="apiService.formDisabled.ped_entregue" [matDatepicker]="ped_entregue" placeholder="{{'Data/Hora Entregue' | translate}}" name="ped_entregue" [(ngModel)]="apiService.formData.ped_entregue">  
+          <mat-datepicker-toggle matSuffix [for]="ped_entregue"></mat-datepicker-toggle> 
+          <mat-datepicker #ped_entregue></mat-datepicker> 
+          <mat-error>Data/Hora Entregue {{'é obrigatório' | translate}}!.</mat-error> 
+        </mat-form-field> 
+        <a matTooltip="Data/Hora Atual" aria-label="" (click)="onDataHora2()"> 
+          <mat-icon>calendar_today</mat-icon> 
+        </a> 
+      </div> 
+    
+      <hr>
+      <div class="example-container" *ngIf="permissaoView('itens')">  
+        <mat-accordion>  
+          <mat-expansion-panel> 
+            <mat-expansion-panel-header> 
+              <mat-panel-title> 
+                {{'Itens' | translate}} 
+              </mat-panel-title> 
+            </mat-expansion-panel-header> 
+              <!-- TABELA DE ITENS -->  
+              <table class="table table-borderless"> 
+              <thead class="thead-light"> 
+              <th *ngIf="apiService.formVisible_itens.car_codigo">{{'Cardápio' | translate}} </th> 
+              <th *ngIf="apiService.formVisible_itens.ite_preco">{{'Preco' | translate}} </th> 
+              <th *ngIf="apiService.formVisible_itens.ite_qtde">{{'Qtde' | translate}} </th> 
+              <th *ngIf="apiService.formVisible_itens.ite_subtotal">{{'Subtotal' | translate}} </th> 
+                <th> 
+                  <a *ngIf="permissaoInsert('itens')" class="btn_amarelo" matTooltip="{{'Adicionar' | translate}}" (click)="FormItemitens(null,apiService.formData.ped_codigo)"><mat-icon>add</mat-icon></a> 
+                </th> 
+              </thead> 
+              <tbody> 
+                  <!--<tr *ngIf="apiService.Itemsitens.length==0" [class.text-danger]="apiService.Itemsitens.length==0">  
+                    <td class="font-italic text-center" colspan="4"> 
+                      Nenhum item adicionado.  
+                    </td>  
+                  </tr>--> 
+                  <tr *ngFor="let itemitens of apiService.Itemsitens; let i=index;">  
+                <td *ngIf="apiService.formVisible_itens.car_codigo">{{itemitens.car_nome | unescape}}</td> 
+                <td *ngIf="apiService.formVisible_itens.ite_preco">{{itemitens.ite_preco}}</td> 
+                <td *ngIf="apiService.formVisible_itens.ite_qtde">{{itemitens.ite_qtde}}</td> 
+                <td *ngIf="apiService.formVisible_itens.ite_subtotal">{{itemitens.ite_subtotal}}</td> 
+                  <td> 
+                    <a *ngIf="permissaoUpdate('itens')" class="btn_amarelo" matTooltip="{{'Editar' | translate}}" (click)="FormItemitens(i,apiService.formData.ped_codigo)"><mat-icon>edit</mat-icon></a>  
+                    <a *ngIf="permissaoDelete('itens')" class="btn_amarelo" matTooltip="{{'Excluir' | translate}}"  (click)="onDeleteItensitens(itemitens.ite_codigo,i)"><mat-icon>delete</mat-icon></a> 
+                  </td> 
+                </tr>  
+              </tbody> 
+            </table>  
+          </mat-expansion-panel> 
+        </mat-accordion> 
+      </div>  
+      <div class="example-container"> 
+        <mat-form-field>
+          <textarea matInput placeholder="{{'Observações' | translate}}" name="ped_obs" #ped_obs="ngModel" [(ngModel)]="apiService.formData.ped_obs"></textarea> 
+        </mat-form-field>
+      </div> 
+      <div class="button-row"> 
+        <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+        <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+      </div> 
+    </div>
+  </div>
+</form> 
+</div> 

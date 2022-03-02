@@ -1,0 +1,51 @@
+﻿<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div align="center">
+  <div class="example-container" align="center">  
+    <div class="row"> 
+      <div class="col-sm"> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Categorias' | translate | uppercase}}</div> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Categorias' | translate | uppercase}}</div>  
+      </div>
+      <div class="col-sm-0"> 
+        <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('categorias')"><mat-icon>help</mat-icon></a>  
+      </div> 
+    </div>  
+  </div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="cat_codigo" #cat_codigo="ngModel" [(ngModel)]="apiService.formData.cat_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="cat_codigo" #cat_codigo="ngModel" [(ngModel)]="apiService.formData.cat_codigo" > 
+    </mat-form-field> 
+  </div> 
+  <div class="add-bottom-padding"> 
+    <mat-checkbox  name="cat_ativo" #cat_ativo="ngModel" [(ngModel)]="apiService.formData.cat_ativo">{{'Ativo' | translate}}</mat-checkbox>
+  </div> 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.cat_nome"> 
+      <input [readonly]="apiService.formDisabled.cat_nome" matInput placeholder="{{'Descrição' | translate}}" name="cat_nome" #cat_nome="ngModel" [(ngModel)]="apiService.formData.cat_nome"> 
+      <mat-error>{{'Descrição' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+
+
+  <div class="example-container" *ngIf="apiService.formVisible.cat_imagem"> 
+    <mat-form-field> 
+      <ngx-mat-file-input (change)="selectFile($event)" [disabled]="apiService.formDisabled.cat_imagem" placeholder="CLICK AQUI PARA UPLOAD DA IMAGEM"   name="cat_imagem" #cat_imagem="ngModel" [(ngModel)]="apiService.formData.cat_imagem" (change)="onFileSelect($event)"></ngx-mat-file-input> 
+    </mat-form-field> 
+    <button type="button" class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">ENVIAR IMAGEM</button>
+    <div > 
+    <div *ngIf="apiService.formData.cat_imagem!='[object Object]'" >  <img *ngIf="apiService.formData.cat_imagem" class="reframe-round" [src]="apiService.formData.cat_imagem"/></div> 
+    </div> 
+  </div><hr> 
+
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+  </div> 
+</div>
+</form> 
+</div> 

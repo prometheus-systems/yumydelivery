@@ -1,0 +1,40 @@
+<form #form="ngForm" autocomplete="off">
+  <div align="center">
+    <div class="barheader" align="center">Sabores</div>
+    <hr>
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+        <div class="example-container" align="center">  
+                  <!-- TABELA DE ITENS -->  
+                <table align="center" width="200px"> 
+                    <tr *ngFor="let sabores of apiService.arrSabores; let i=index;" class="pborder" align="center">
+                      <td>
+                        <table align="center" *ngIf="TipoGrupo=='C'">
+                          <tr>
+                            <td align="center"><mat-checkbox name="sab_select" #sab_select="ngModel" [(ngModel)]="sabores.sab_select"></mat-checkbox> </td>    
+                          </tr>
+                          <tr>
+                            <td align="center" class="ptitle">{{sabores.sab_nome}}</td>                         
+                          </tr>
+                          <tr>
+                            <td align="center" class="pdescription">{{sabores.sab_descricao}}</td> 
+                          </tr>
+                          <tr>
+                            <td align="center" class="pprice">{{sabores.sab_valor | currency:'BRL'}}</td> 
+                          </tr> 
+                        </table>
+                        
+                        <table align="center" *ngIf="TipoGrupo=='V'">
+                          <tr>
+                            <td align="center" class="ptitle">{{sabores.sab_nome}}</td>                         
+                          </tr>
+                        </table> 
+                      </td>
+                    </tr>  
+                </table>  
+    </div>
+  </cdk-virtual-scroll-viewport>
+    <div class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>
+  </div>
+  </form>  
+    
+  

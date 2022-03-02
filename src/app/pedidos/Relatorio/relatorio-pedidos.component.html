@@ -1,0 +1,68 @@
+﻿<div [@bounce]="bounce">
+<div align="left">
+<button id="btnback1" name="btnback1" class="btn_amarelo" matTooltip="Voltar" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button>
+</div> 
+<div class="example-container" align="center">
+  <div class="barheader">{{'RELATÓRIO DE' | translate}} {{'PEDIDOS' | translate | uppercase}}</div>
+  <div><p>{{apiService.strParametros}}</p></div>
+      <table class="table table-borderless" align="center" width="100%"> 
+        <thead class="thead-light"> 
+        <th>{{'Código' | translate}}</th>
+        <th>{{'Vendedor' | translate}}</th>
+        <th>{{'Cliente' | translate}}</th>
+        <th>{{'Data/Hora' | translate}}</th>
+        <th>{{'Forma Pgto.' | translate}}</th>
+        <th>{{'Tipo Pagto.' | translate}}</th>
+        <th>{{'Status' | translate}}</th>
+        <th>{{'Data/Hora Pronto' | translate}}</th>
+        <th>{{'Usar Bonificação' | translate}}</th>
+        <th>{{'Data/Hora Retirado' | translate}}</th>
+        <th>{{'Data/Hora Entregue' | translate}}</th>
+        <th>{{'Total' | translate}}</th>
+
+        </thead> 
+        <tbody> 
+          <tr *ngFor="let pedidos of apiService.arrpedidos"> 
+           <td>{{pedidos.ped_codigo}}</td>
+           <td>{{pedidos.ven_nome}}</td>
+           <td>{{pedidos.usu_nome}}</td>
+           <td>{{pedidos.ped_datahora | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+           <td>{{pedidos.ped_forma_pagto}}</td>
+           
+           <td>{{pedidos.ped_tipo_pagto}}</td>
+           <td>{{pedidos.ped_status}}</td>
+           <div *ngIf="pedidos.ped_datapronto!='0000-00-00 00:00:00'">{{pedidos.ped_datapronto | date:'dd/MM/yyyy hh:mm:ss'}}</div>
+           <div *ngIf="pedidos.ped_datapronto=='0000-00-00 00:00:00'">00/00/0000 00:00:00</div>
+           <td><mat-icon *ngIf="pedidos.ped_usarbonificacao">checked</mat-icon></td>
+
+           <td><div *ngIf="pedidos.ped_retirado!='0000-00-00 00:00:00'">{{pedidos.ped_retirado | date:'dd/MM/yyyy hh:mm:ss'}}</div>
+           <div *ngIf="pedidos.ped_retirado=='0000-00-00 00:00:00'">00/00/0000 00:00:00</div></td>
+
+           <td><div *ngIf="pedidos.ped_entregue!='0000-00-00 00:00:00'">{{pedidos.ped_entregue | date:'dd/MM/yyyy hh:mm:ss'}}</div>
+           <div *ngIf="pedidos.ped_entregue=='0000-00-00 00:00:00'">00/00/0000 00:00:00</div></td>
+
+           <td>{{pedidos.ped_total}}</td>
+          </tr> 
+          <tr id="thead-light" *ngIf="tem_total">
+          <td>{{'TOTAL GERAL' | translate}}</td> 
+          <td></td>
+          <td></td>
+          <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{totalgeralped_total | number}}</td>
+        </tr> 
+        </tbody> 
+      </table> 
+  <div align="right"> 
+     <button id="btnchart" name="btnchart" class="btn_amarelo" matTooltip="{{'Gráficos' | translate}}" (click)="GoogleChart()"><mat-icon>pie_chart</mat-icon></button> 
+     <button id="btnprint" name="btnprint" class="btn_amarelo" matTooltip="{{'Imprimir' | translate}}" (click)="Imprimir()"><mat-icon>printer</mat-icon></button> 
+     <button id="btnback" name="btnback" class="btn_amarelo" matTooltip="{{'Voltar' | translate}}" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button> 
+  </div> 
+</div> 
+</div>

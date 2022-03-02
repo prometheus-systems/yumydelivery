@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords"">
+  <meta name="author" content="prometheus">  
+  <meta name="robots" content="index,follow">  
+  <!--<link rel="manifest" href="manifest.json">-->
+  <meta name="theme-color" content="#025c75">  
+  <!--<base href="./">  -->
+  <!--<base href="file:///android_asset/www">
+  <script type="text/javascript" src="cordova.js"></script>-->
+
+  <title>Yumy food's</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--<link rel="stylesheet" href="alert/dist/sweetalert.css">
+  <script src="alert/dist/sweetalert-dev.js"></script>
+  <script type="text/javascript">
+    var stripe = Stripe('pk_test_51H5ZHFBftWZwyVin46VVubK8vak7PAa4bOA5mC4NnEGcnIvZEUupinbcPm5EO1U4eNPMcg4rVAnQHPO7Ts29OvJQ00FyP1KTFY'); // use your test publishable key
+    var elements = stripe.elements();
+  </script>-->
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+  <script language="javascript">    
+    document.onkeydown = function () { 
+      switch (event.keyCode) {
+        case 116 :  
+           event.returnValue = false;
+           event.keyCode = 0;           
+           return false;             
+         case 82 : 
+           if (event.ctrlKey) {  
+              event.returnValue = false;
+             event.keyCode = 0;             
+             return false;
+      }
+    }
+
+} 
+
+function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+    }
+        
+            </script>
+            
+            <script>
+                  history.pushState(null, null, location.href);
+                  window.onpopstate = function () {
+                      history.go(1);
+                  };
+            </script>
+  
+  
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+</head>
+<body onload="onLoad()" class="mat-typography">
+  <app-root></app-root>
+  <div>
+  <my-app>CARREGANDO...</my-app>
+</div>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+</html>

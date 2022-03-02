@@ -1,0 +1,76 @@
+﻿<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <div align="center">
+  <hr>  
+  <div class="example-container" align="center">  
+    <div class="row"> 
+      <div class="col-sm"> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Bonificação' | translate | uppercase}}</div> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Bonificação' | translate | uppercase}}</div>  
+      </div>
+      <div class="col-sm-0"> 
+        <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('bonificacao')"><mat-icon>help</mat-icon></a>  
+      </div> 
+    </div>  
+  </div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="bon_codigo" #bon_codigo="ngModel" [(ngModel)]="apiService.formData.bon_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="bon_codigo" #bon_codigo="ngModel" [(ngModel)]="apiService.formData.bon_codigo" > 
+    </mat-form-field> 
+  </div> 
+        <div *ngIf="apiService.formVisible.ven_codigo"> 
+    <div class="example-container" *ngIf="apiService.formDisabled.ven_codigo"> 
+    <mat-form-field> 
+      <input [readonly]="true" matInput name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+    </mat-form-field> 
+    </div>
+  <div *ngIf="TipoGrupo=='A'">
+  <div class="example-container" *ngIf="!apiService.formDisabled.ven_codigo">    
+    <mat-form-field> 
+      <mat-label>{{'Vendedores' | translate}}</mat-label>
+      <mat-select name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+        <mat-option *ngFor="let vendedores of arrvendedores | async" [value]="vendedores.ven_codigo">
+          {{vendedores.ven_nome}} 
+        </mat-option> 
+      </mat-select> 
+      <mat-error>{{'Vendedores' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+  </div>
+</div>
+
+        <div *ngIf="apiService.formVisible.car_codigo"> 
+    <div class="example-container" *ngIf="apiService.formDisabled.car_codigo"> 
+    <mat-form-field> 
+      <input [readonly]="true" matInput name="car_codigo" #car_codigo="ngModel" [(ngModel)]="apiService.formData.car_codigo"> 
+    </mat-form-field> 
+    </div>
+ 
+  <div class="example-container" *ngIf="!apiService.formDisabled.car_codigo">    <mat-form-field> 
+      <mat-label>{{'Cardápio' | translate}}</mat-label>
+      <mat-select name="car_codigo" #car_codigo="ngModel" [(ngModel)]="apiService.formData.car_codigo"> 
+        <mat-option *ngFor="let cardapio of arrcardapio | async" [value]="cardapio.car_codigo">
+          {{cardapio.car_nome}} 
+        </mat-option> 
+      </mat-select> 
+      <mat-error>{{'Cardápio' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+  </div>
+
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.bon_pontos"> 
+      <input [readonly]="apiService.formDisabled.bon_pontos" matInput type="number" placeholder="{{'Pontos' | translate}}"  min="0" name="bon_pontos" #bon_pontos="ngModel" [(ngModel)]="apiService.formData.bon_pontos" > 
+      <mat-error>{{'Pontos' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+  </div> 
+</div>
+</form> 
+</div> 

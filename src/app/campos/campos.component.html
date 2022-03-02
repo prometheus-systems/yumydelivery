@@ -1,0 +1,24 @@
+﻿<h4 class="dispaly-4" align="center">CAMPOS</h4>  
+<hr>  
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">  
+  <input type="hidden"  name="cmp_codigo" #cmp_codigo="ngModel" [(ngModel)]="formData.cmp_codigo">  
+    <div class="example-container">
+    <mat-form-field> 
+      <input matInput placeholder="Título" name="cmp_descricao" #cmp_descricao="ngModel" [(ngModel)]="formData.cmp_descricao"> 
+      <mat-error>Título é obrigatório.</mat-error> 
+    </mat-form-field> btn_amarelo
+  </div> 
+ 
+    <div class="example-container">
+    <mat-form-field> 
+      <input matInput placeholder="Nome" name="cmp_nome" #cmp_nome="ngModel" [(ngModel)]="formData.cmp_nome"> 
+      <mat-error>Nome é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+  <div class="form-group">  
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm"> Gravar</button>  
+    <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i> Cancelar</button>  
+  </div>  
+</form>  
+  

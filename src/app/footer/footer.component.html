@@ -1,0 +1,10 @@
+<div *ngIf="getVendas$ | async as getVendas" class="footer">  
+  <div *ngIf="getDeviceDes$ | async as getDeviceDes">
+    <footer>  
+        <mat-toolbar color=".bg-light" class="mat-elevation-z5" *ngIf="getStatus_logado$ | async as getStatus_logado"> 
+          <p *ngIf="getResult_login$ | async as getResult_login" class="font-small">{{'CÓDIGO' | translate}}: {{getResult_login.CodigoUsuario}} - {{'USUÁRIO' | translate}}: {{getResult_login.NomeUsuario}} - E-MAIL: {{getResult_login.EmailUsuario}}- {{'GRUPO' | translate}}: {{getResult_login.GrupoUsuario}}</p>
+        </mat-toolbar>
+    </footer>
+  </div>
+</div>
+

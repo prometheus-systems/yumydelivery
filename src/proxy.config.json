@@ -1,0 +1,8 @@
+{
+"/api/*": {
+"target": "http://54.232.254.5/sgm-bartira",
+"secure": false,
+"logLevel": "debug",
+"changeOrigin": true
+}
+}

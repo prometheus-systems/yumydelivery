@@ -1,0 +1,62 @@
+<form #form="ngForm" autocomplete="off">
+  <div align="center">
+    <div class="barheader" align="center">Endereço de Entrega</div>  
+      <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+        <div class="example-container-100" align="center">  
+     
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Endereço' | translate}}" name="end_endereco" #end_endereco="ngModel" [(ngModel)]="apiService.itemsEndereco.end_endereco" appUnscape>
+            </mat-form-field> 
+          </div> 
+
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Numero' | translate}}" name="end_numero" #end_numero="ngModel" [(ngModel)]="apiService.itemsEndereco.end_numero"> 
+            </mat-form-field> 
+          </div> 
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Bairro' | translate}}" name="end_bairro" #end_bairro="ngModel" [(ngModel)]="apiService.itemsEndereco.end_bairro" appUnscape> 
+            </mat-form-field> 
+          </div> 
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'CEP' | translate}}" name="end_cep" #end_cep="ngModel" [(ngModel)]="apiService.itemsEndereco.end_cep"> 
+            </mat-form-field> 
+          </div> 
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Cidade' | translate}}" name="end_cidade" #end_cidade="ngModel" [(ngModel)]="apiService.itemsEndereco.end_cidade" appUnscape> 
+            </mat-form-field> 
+          </div> 
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Complemento' | translate}}" name="end_complemento" #end_complemento="ngModel" [(ngModel)]="apiService.itemsEndereco.end_complemento" appUnscape> 
+            </mat-form-field> 
+          </div> 
+         
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'Referência' | translate}}" name="end_referencia" #end_referencia="ngModel" [(ngModel)]="apiService.itemsEndereco.end_referencia" appUnscape> 
+            </mat-form-field> 
+          </div> 
+         
+          <div class="example-container">
+            <mat-form-field> 
+              <input matInput placeholder="{{'UF' | translate}}" name="end_uf" #end_uf="ngModel" [(ngModel)]="apiService.itemsEndereco.end_uf"> 
+            </mat-form-field> 
+          </div> 
+             
+        </div>
+      </cdk-virtual-scroll-viewport>
+    <div class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>
+  </div>
+</form>  
+    
+  

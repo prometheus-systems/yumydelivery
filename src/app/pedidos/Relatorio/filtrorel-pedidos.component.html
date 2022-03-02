@@ -1,0 +1,27 @@
+﻿ 
+<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formParRel" (submit)="onSubmit(form)"> 
+ <hr> 
+ <div class="barheader"class="text-center">{{'FILTRO RELATÓRIO' | translate}} {{'DE PEDIDOS' | translate | uppercase}}</div> 
+ <hr> 
+ <div>
+ <mat-form-field> 
+   <input matInput [matDatepicker]="ped_datahora1" placeholder="Data Inicial" name="ped_datahora1" [(ngModel)]="apiService.formParRel.ped_datahora1">  
+   <mat-datepicker-toggle matSuffix [for]="ped_datahora1"></mat-datepicker-toggle> 
+   <mat-datepicker #ped_datahora1></mat-datepicker> 
+ </mat-form-field> 
+</div> 
+
+<div> 
+ <mat-form-field> 
+   <input matInput [matDatepicker]="ped_datahora2" placeholder="Data Final" name="ped_datahora2" [(ngModel)]="apiService.formParRel.ped_datahora2">  
+   <mat-datepicker-toggle matSuffix [for]="ped_datahora2"></mat-datepicker-toggle> 
+   <mat-datepicker #ped_datahora2></mat-datepicker> 
+ </mat-form-field> 
+</div> 
+<div class="button-row"> 
+   <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Imprimir' | translate}}</button> 
+   <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+</div> 
+</form> 
+</div>

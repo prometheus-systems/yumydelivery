@@ -1,0 +1,163 @@
+﻿<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">
+  <div align="center">
+  <hr>  
+  <div class="example-container" >  
+    <div class="row"> 
+      <div class="col-sm"> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Vendedores' | translate | uppercase}}</div> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Vendedores' | translate | uppercase}}</div>  
+      </div>
+      <div class="col-sm-0"> 
+        <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('vendedores')"><mat-icon>help</mat-icon></a>  
+      </div> 
+    </div>  
+  </div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+  
+  <div class="example-container"> 
+    <mat-form-field> 
+      <ngx-mat-file-input (change)="selectFile($event)" placeholder="CLICK AQUI PARA UPLOAD DA LOGO"   name="ven_logo" #ven_logo="ngModel" [(ngModel)]="apiService.formData.ven_logo" (change)="onFileSelect($event)"></ngx-mat-file-input> 
+    </mat-form-field> 
+    <button type="button" class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">ENVIAR LOGO</button>
+    <div > 
+    <div *ngIf="apiService.formData.ven_logo!='[object Object]'">  <img *ngIf="apiService.formData.ven_logo" class="reframe-round" [src]="apiService.formData.ven_logo"/></div> 
+    </div> 
+  </div><hr> 
+
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo" > 
+    </mat-form-field> 
+  </div> 
+
+ <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_nome"> 
+      <input [readonly]="apiService.formDisabled.ven_nome" matInput placeholder="{{'Nome' | translate}}" name="ven_nome" #ven_nome="ngModel" [(ngModel)]="apiService.formData.ven_nome" appUnscape> 
+      <mat-error>{{'Nome' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_cnpj"> 
+      <input [readonly]="apiService.formDisabled.ven_cnpj" matInput placeholder="{{'CNPJ' | translate}}" mask="00.000.000/0000-00" name="ven_cnpj" #ven_cnpj="ngModel" [(ngModel)]="apiService.formData.ven_cnpj">
+      <mat-error>{{'CNPJ' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_fone"> 
+      <input [readonly]="apiService.formDisabled.ven_fone" matInput placeholder="{{'Fone' | translate}}" mask="(00)00000-0000" name="ven_fone" #ven_fone="ngModel" [(ngModel)]="apiService.formData.ven_fone">
+      <mat-error>{{'Fone' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_email"> 
+      <input [readonly]="apiService.formDisabled.ven_email" matInput placeholder="{{'E-mail' | translate}}" name="ven_email" #ven_email="ngModel" [(ngModel)]="apiService.formData.ven_email"> 
+      <mat-error>{{'E-mail' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_login"> 
+      <input [readonly]="apiService.formDisabled.ven_login" matInput placeholder="{{'Login' | translate}}" name="ven_login" #ven_login="ngModel" [(ngModel)]="apiService.formData.ven_login"> 
+      <mat-error>{{'Login' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_senha"> 
+      <input [readonly]="apiService.formDisabled.ven_senha" type="password" matInput placeholder="{{'Senha' | translate}}" name="ven_senha" #ven_senha="ngModel" [(ngModel)]="apiService.formData.ven_senha"> 
+      <mat-error>{{'Senha' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_horario"> 
+      <input [readonly]="apiService.formDisabled.ven_horario" matInput placeholder="{{'Horário de Funcionamento' | translate}}" name="ven_horario" #ven_horario="ngModel" [(ngModel)]="apiService.formData.ven_horario" mask="AAA-AAA 00:00-00:00">
+      <mat-error>{{'Horário de Funcionamento' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_endereco"> 
+      <input [readonly]="apiService.formDisabled.ven_endereco" matInput placeholder="{{'Endereço' | translate}}" name="ven_endereco" #ven_endereco="ngModel" [(ngModel)]="apiService.formData.ven_endereco" appUnscape> 
+      <mat-error>{{'Endereço' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_numero"> 
+      <input [readonly]="apiService.formDisabled.ven_numero" matInput placeholder="{{'Número' | translate}}" name="ven_numero" #ven_numero="ngModel" [(ngModel)]="apiService.formData.ven_numero"> 
+      <mat-error>{{'Número' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_complemento"> 
+      <input [readonly]="apiService.formDisabled.ven_complemento" matInput placeholder="{{'Complemento' | translate}}" name="ven_complemento" #ven_complemento="ngModel" [(ngModel)]="apiService.formData.ven_complemento" appUnscape> 
+      <mat-error>{{'Complemento' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_bairro"> 
+      <input [readonly]="apiService.formDisabled.ven_bairro" matInput placeholder="{{'Bairro' | translate}}" name="ven_bairro" #ven_bairro="ngModel" [(ngModel)]="apiService.formData.ven_bairro" appUnscape> 
+      <mat-error>{{'Bairro' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_cep"> 
+      <input [readonly]="apiService.formDisabled.ven_cep" matInput placeholder="{{'CEP' | translate}}" mask="00000-000" name="ven_cep" #ven_cep="ngModel" [(ngModel)]="apiService.formData.ven_cep">
+      <mat-error>{{'CEP' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_cidade"> 
+      <input [readonly]="apiService.formDisabled.ven_cidade" matInput placeholder="{{'Cidade' | translate}}" name="ven_cidade" #ven_cidade="ngModel" [(ngModel)]="apiService.formData.ven_cidade" appUnscape> 
+      <mat-error>{{'Cidade' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.ven_uf"> 
+      <input [readonly]="apiService.formDisabled.ven_uf" matInput placeholder="{{'UF' | translate}}" name="ven_uf" #ven_uf="ngModel" [(ngModel)]="apiService.formData.ven_uf"> 
+      <mat-error>{{'UF' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="add-bottom-padding" *ngIf="apiService.formVisible.ven_ativo"> 
+    <mat-checkbox [disabled]="apiService.formDisabled.ven_ativo" name="ven_ativo" #ven_ativo="ngModel" [(ngModel)]="apiService.formData.ven_ativo">{{'Ativo' | translate}}</mat-checkbox>
+  </div> 
+
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_long"> 
+      <input [readonly]="apiService.formDisabled.ven_long" matInput type="number" min="0.0" placeholder="{{'Longitude' | translate}}"   name="ven_long" #ven_long="ngModel" [(ngModel)]="apiService.formData.ven_long" > 
+      <mat-error>{{'Longitude' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.ven_lat"> 
+      <input [readonly]="apiService.formDisabled.ven_lat" matInput type="number" min="0.0" placeholder="{{'Latitude' | translate}}"   name="ven_lat" #ven_lat="ngModel" [(ngModel)]="apiService.formData.ven_lat" > 
+      <mat-error>{{'Latitude' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container" *ngIf="apiService.formVisible.ven_info"> 
+    <mat-form-field>
+      <textarea [readonly]="apiService.formDisabled.ven_info" matInput placeholder="{{'Informações Adicionais/Observações' | translate}}" name="ven_info" #ven_info="ngModel" [(ngModel)]="apiService.formData.ven_info" appUnscape></textarea> 
+    </mat-form-field>
+  </div> 
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+  </div> 
+</div>
+</form> 
+</div> 

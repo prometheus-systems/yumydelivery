@@ -1,0 +1,80 @@
+﻿<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div align="center">
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='U'" class="text-center">PERMISSÕES TELAS/CAMPOS - ( {{apiService.formData.tipo | uppercase}} )</div> 
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" class="text-center">INSERIR PERMISSÕES TABELAS</div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="pte_codigo" #pte_codigo="ngModel" [(ngModel)]="apiService.formData.pte_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="Código"  min="0" [disabled]="true" name="pte_codigo" #pte_codigo="ngModel" [(ngModel)]="apiService.formData.pte_codigo" > 
+    </mat-form-field> 
+  </div> 
+  <div class="example-container">
+    <mat-form-field> 
+      <mat-label>Grupo</mat-label>
+      <input matInput  [readonly]="true" name="gus_descricao" #gus_descricao="ngModel" [(ngModel)]="apiService.formData.gus_descricao" > 
+    </mat-form-field> 
+  </div>
+  <div class="example-container"> 
+    <mat-form-field> 
+      <mat-label>Tabela</mat-label>
+      <input matInput [readonly]="true" name="tab_titulo" #tab_titulo="ngModel" [(ngModel)]="apiService.formData.tab_titulo" > 
+    </mat-form-field> 
+  </div>
+
+  <table width="100%">
+    <tr>
+      <td>
+        <div class="add-bottom-padding" *ngIf="apiService.formData.tipo==='Cadastro'"> 
+          <mat-checkbox name="pte_inserir" #pte_inserir="ngModel" [(ngModel)]="apiService.formData.pte_inserir">Inserir</mat-checkbox>
+        </div> 
+      </td>
+      <td>
+        <div class="add-bottom-padding" *ngIf="apiService.formData.tipo==='Cadastro'"> 
+          <mat-checkbox name="pte_alterar" #pte_alterar="ngModel" [(ngModel)]="apiService.formData.pte_alterar">Alterar</mat-checkbox>
+        </div>
+      </td>
+      <td>
+        <div class="add-bottom-padding" *ngIf="apiService.formData.tipo==='Cadastro'"> 
+          <mat-checkbox name="pte_excluir" #pte_excluir="ngModel" [(ngModel)]="apiService.formData.pte_excluir">Excluiur</mat-checkbox>
+        </div> 
+      </td>
+      <td>
+        <div class="add-bottom-padding"> 
+          <mat-checkbox name="pte_visualizar" #pte_visualizar="ngModel" [(ngModel)]="apiService.formData.pte_visualizar">Visualizar</mat-checkbox>
+        </div> 
+    </td>
+  </tr>
+</table>
+
+ 
+
+  <hr>
+  <div *ngIf="apiService.formData.tipo==='Cadastro'">
+    <h4>Permissões Campos</h4> 
+    <!-- TABELA DE ITENS -->  
+    <table class="table table-borderless"> 
+      <thead class="thead-light"> 
+        <th>Campo</th> 
+        <th>Permissão</th> 
+        <th></th>
+      </thead> 
+      <tbody> 
+        <tr *ngFor="let itempermissoes_campos of apiService.Itemspermissoes_campos; let i=index;">  
+          <td>{{itempermissoes_campos.cmp_descricao}}</td> 
+          <td>{{itempermissoes_campos.pca_permissao}}</td> 
+          <td>{{itempermissoes_campos.pca_status}}</td> 
+          <td> 
+            <a class="btn_amarelo" matTooltip="Editar" (click)="FormItempermissoes_campos(i,apiService.formData.tab_codigo ,apiService.formData.gus_codigo)"><mat-icon>edit</mat-icon></a>  
+          </td>         
+        </tr>  
+      </tbody> 
+    </table>  
+  </div>
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">Gravar</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i> Cancelar</button> 
+  </div> 
+</div>
+</form> 

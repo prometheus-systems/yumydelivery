@@ -1,0 +1,42 @@
+﻿<h4 class="dispaly-4" align="center">PERMISSÕES CAMPOS</h4>  
+<hr>  
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)"> 
+  <div class="example-container"> 
+      <mat-form-field> 
+        <mat-label>CÓDIGO</mat-label>
+          <input matInput [readonly]="true" name="cmp_codigo" #cmp_codigo="ngModel" [(ngModel)]="formData.cmp_codigo" > 
+      </mat-form-field> 
+  </div>  
+
+  <div class="example-container"> 
+    <mat-form-field> 
+      <mat-label>CAMPO</mat-label>
+       <input matInput [readonly]="true" name="cmp_descricao" #cmp_descricao="ngModel" [(ngModel)]="formData.cmp_descricao" > 
+    </mat-form-field> 
+  </div>  
+  
+  <div class="add-bottom-padding">
+      <mat-label>PERMISSÃO</mat-label><BR>
+      <mat-radio-group name="pca_permissao" #pca_permissao="ngModel" [(ngModel)]="formData.pca_permissao"> 
+        <mat-radio-button value="Normal"    class="example-margin">NORMAL</mat-radio-button>
+        <mat-radio-button value="Visualiza" class="example-margin">VISUALIZA</mat-radio-button>
+        <mat-radio-button value="Invisivel" class="example-margin">INVISIVEL</mat-radio-button>
+        <mat-radio-button value="Obrigatorio" class="example-margin">OBRIGATÓRIO</mat-radio-button>
+      </mat-radio-group>   
+  </div>  
+
+  <div class="add-bottom-padding">
+    <mat-label>STATUS DO REGISTRO</mat-label><BR>
+    <mat-radio-group name="pca_status" #pca_status="ngModel" [(ngModel)]="formData.pca_status"> 
+      <mat-radio-button value="sempre"    class="example-margin">SEMPRE</mat-radio-button>
+      <mat-radio-button value="aberta"    class="example-margin">ABERTA</mat-radio-button>
+      <mat-radio-button value="encerrada" class="example-margin">ENCERRADA</mat-radio-button>
+    </mat-radio-group>   
+</div>  
+
+  <div class="form-group">  
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm"> Gravar</button>  
+    <button type="button" class="btn_amarelo" [mat-dialog-close]><i class="fa fa-close"></i> Cancelar</button>  
+  </div>  
+</form>  
+  

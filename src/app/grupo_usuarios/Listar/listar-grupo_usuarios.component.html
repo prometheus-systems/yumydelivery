@@ -1,0 +1,43 @@
+﻿<div class="example-container" align="center">
+  <div align="center"><div class="barheader">GRUPO DE USUÁRIOS</div> 
+  <hr>
+  <mat-form-field> 
+      <div class="row">
+        <div class="col-sm">   
+          <input matInput type="search" (keyup)="applyFilter($event.target.value)" placeholder="CONSULTAR" >
+        </div>
+        <div class="col-sm">  
+          <mat-icon>search</mat-icon>
+        </div>
+      </div>   
+    </mat-form-field> 
+  <div> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <!--COLUNA TABELA LISTA GUS_CODIGO-->
+    <ng-container matColumnDef="gus_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th> 
+      <td mat-cell *matCellDef="let element"> {{element.gus_codigo}} </td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA GUS_DESCRICAO-->
+    <ng-container matColumnDef="gus_descricao"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th> 
+      <td mat-cell *matCellDef="let element"> {{element.gus_descricao}} </td>
+    </ng-container> 
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button mat-icon-button matTooltip="Excluir" aria-label="Excluir registro" (click)="deletegrupo_usuarios(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editgrupo_usuarios(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div>
+    <button type="button" (click)="insertgrupo_usuarios()" class="btn_amarelo" ><i class="fa fa-close"></i>Adicionar</button>
+    <button type="button" (click)="filtrorelgrupo_usuarios()" class="btn_amarelo" ><i class="fa fa-close"></i>Relatório</button>
+  </div> 
+</div> 

@@ -1,0 +1,206 @@
+﻿<app-loader></app-loader> 
+<div *ngIf="getVendas$ | async as getVendas"> 
+  <div *ngIf="getDeviceDes$ | async as getDeviceDes"> 
+    <nav class="navbar"> 
+    <!-- logo --> 
+    <mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="getStatus_logado$ | async as getStatus_logado"> 
+      <span class="button-left" flex> 
+    <button mat-button (click)="onHome()">Home</button> 
+    </span> 
+    <span> 
+      <button mat-icon-button [matMenuTriggerFor]="menu_cadastros" aria-label="Menu Cadastros"> 
+          <mat-icon>more_vert</mat-icon> 
+          <span>{{'Cadastros' | translate}}</span> 
+      </button> 
+      <mat-menu #menu_cadastros="matMenu"> 
+        <button mat-menu-item (click)="LoadLink('/Listarbonificacao')" *ngIf="permissaoTela('bonificacao')"> 
+          <mat-icon>attach_money</mat-icon>  
+          <span>{{'Bonificação' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listarcardapio')" *ngIf="permissaoTela('cardapio')"> 
+          <mat-icon>fastfood</mat-icon>  
+          <span>{{'Cardápio' | translate }}</span> 
+        </button>  
+        <div *ngIf="getTipoGrupo$ | async as getTipoGrupo">
+        <button mat-menu-item (click)="LoadLink('/Listarcategorias')" *ngIf="permissaoTela('categorias')"> 
+          <mat-icon>grid_on</mat-icon>  
+          <span>{{'Categorias' | translate }}</span> 
+        </button>  
+      </div>
+        <button mat-menu-item (click)="LoadLink('/Listarendereco')" *ngIf="permissaoTela('endereco')"> 
+          <mat-icon>map</mat-icon>  
+          <span>{{'Endereço' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listarpedidos')" *ngIf="permissaoTela('pedidos')"> 
+          <mat-icon>list</mat-icon>  
+          <span>{{'Pedidos' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listarsabores')" *ngIf="permissaoTela('sabores')"> 
+          <mat-icon>food_bank</mat-icon>  
+          <span>{{'Sabores' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listarvendedores')" *ngIf="permissaoTela('vendedores')"> 
+          <mat-icon>record_voice_over</mat-icon>  
+          <span>{{'Vendedores' | translate }}</span> 
+        </button>  
+      </mat-menu> 
+    </span> 
+    <span style="justify-content: center; flex: 1 1 auto;"></span> 
+    <span>  
+        <button mat-icon-button [matMenuTriggerFor]="menu_relatorios" aria-label="Menu Relatório"> 
+            <mat-icon>print</mat-icon>  
+            <span>{{'Relatórios' | translate}}</span>  
+        </button> 
+        <mat-menu #menu_relatorios="matMenu"> 
+        <button mat-menu-item (click)="LoadLink('/Filtrorellista_pedidos')" *ngIf="permissaoTela('lista_pedidos')">  
+          <mat-icon>print</mat-icon>  
+          <span>{{'Sintético por Data' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Filtrorelsintetico_por_data')" *ngIf="permissaoTela('sintetico_por_data')">  
+          <mat-icon>print</mat-icon>  
+          <span>{{'Sintético por Categoria' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Filtrorelsintetico_por_cardapio')" *ngIf="permissaoTela('sintetico_por_cardapio')">  
+          <mat-icon>print</mat-icon>  
+          <span>{{'Sintético por Produto' | translate }}</span> 
+        </button>  
+        <button mat-menu-item (click)="filtrorelusuarios()">  
+          <mat-icon>print</mat-icon>  
+          <span>{{'Compradores' | translate }}</span> 
+        </button>  
+        </mat-menu>  
+    </span> 
+  <!--<span style="justify-content: center; flex: 1 1 auto;"></span>  
+    <span>  
+        <button mat-icon-button [matMenuTriggerFor]="menu_apontamentos" aria-label="Menu apontamentos"> 
+            <mat-icon>check_circle</mat-icon>  
+            <span>{{'apontamentos' | translate}}</span>  
+        </button> 
+        <mat-menu #menu_apontamentos="matMenu"> 
+        <button mat-menu-item (click)="LoadLink('/Filtroaptochecklist_pedidos')" *ngIf="permissaoTela('checklist_pedidos')">  
+          <mat-icon>check_circle</mat-icon>  
+          <span>{{'CheckList Pedidos' | translate }}</span> 
+        </button>  
+        </mat-menu>  
+    </span> -->
+        <span style="justify-content: center; flex: 1 1 auto;"></span> 
+    <div *ngIf="getTipoGrupo$ | async as getTipoGrupo"><span> 
+        <button mat-icon-button [matMenuTriggerFor]="menu_adm" aria-label="Menu Administração"> 
+            <mat-icon>build</mat-icon> 
+            <span>{{'Administração' | translate}}</span> 
+        </button>  
+        <mat-menu #menu_adm="matMenu">  
+        <button mat-menu-item (click)="LoadLink('/Listargrupo_usuarios')">  
+          <mat-icon>group</mat-icon>   
+          <span>{{'Grupo de Usuários' | translate}}</span>  
+        </button> 
+        <button mat-menu-item (click)="LoadLink('/Listarusuarios')"> 
+          <mat-icon>person</mat-icon> 
+          <span>{{'Usuários' | translate}}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listarpermissoes_tabelas')">  
+          <mat-icon>lock</mat-icon> 
+          <span>{{'Permissões' | translate}}</span> 
+        </button>  
+        <button mat-menu-item (click)="LoadLink('/Listartabelas')"> 
+          <mat-icon>menu_book</mat-icon> 
+          <span>{{'Dicionário' | translate}}</span> 
+        </button> 
+        </mat-menu> 
+    </span></div>  
+    <span style="justify-content: center; flex: 7 7 auto;"></span> 
+    <span class="button-right" flex> 
+    <div class="btn-group"> 
+        <button *ngFor="let lang of supportedLangs"  
+            (click)="selectLang(lang.value)"  
+            class="btn btn-default" [class.btn-primary]="isCurrentLang(lang.value)"> 
+            {{ lang.display }} 
+        </button>  
+    </div> 
+    </span>  
+    <span style="justify-content: center; flex: 1 1 auto;"></span> 
+    <span class="button-right" flex> 
+      <button mat-button (click)="onLogout()" *ngIf="getStatus_logado$ | async as getStatus_logado">Logout</button> 
+    </span> 
+  </mat-toolbar> 
+  </nav>
+  </div>
+
+  <!-- 
+    ----------------------------------------------------------------------------- 
+    ----------------------------------------------------------------------------- 
+    ------------------------M E N U - M O B I L E-------------------------------- 
+    ----------------------------------------------------------------------------- 
+    ----------------------------------------------------------------------------- 
+  --> 
+  <div *ngIf="getDeviceMob$ | async as getDeviceMob"> 
+    <app-loader></app-loader> 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-yellow" id="bg" *ngIf="getStatus_logado$ | async as getStatus_logado"> 
+      <a (click)="LoadLink('/Inicial')"><img class="menu-logo" src="assets/img/logo.png"></a> 
+      <div class="glow-yumy">Yumy</div> 
+      <a class="navbar-toggler" type="a" (click)="toggleNavbar()">  
+        <span class="navbar-toggler-icon"></span>  
+      </a> 
+      <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }"> 
+        <ul class="navbar-nav mr-auto" align="center"> 
+          <mat-accordion> 
+            <mat-expansion-panel> 
+              <mat-expansion-panel-header> 
+                <mat-panel-title> 
+                  {{'Cadastros' | translate}} 
+                </mat-panel-title> 
+              </mat-expansion-panel-header> 
+              <li *ngIf="permissaoTela('bonificacao')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarbonificacao')"><div class="barheader">{{'Bonificação' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('cardapio')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarcardapio')"><div class="barheader">{{'Cardápio' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('categorias')" class="nav-item"><div *ngIf="getTipoGrupo$ | async as getTipoGrupo"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarcategorias')"><div class="barheader">{{'Categorias' | translate }}</div></a></div></li> 
+              <li *ngIf="permissaoTela('endereco')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarendereco')"><div class="barheader">{{'Endereço' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('pedidos')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarpedidos')"><div class="barheader">{{'Pedidos' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('sabores')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarsabores')"><div class="barheader">{{'Sabores' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('vendedores')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarvendedores')"><div class="barheader">{{'Vendedores' | translate }}</div></a></li> 
+            </mat-expansion-panel> 
+            <mat-expansion-panel> 
+            <mat-expansion-panel-header>  
+              <mat-panel-title> 
+                {{'Relatórios' | translate}} 
+              </mat-panel-title> 
+            </mat-expansion-panel-header>  
+              <li *ngIf="permissaoTela('lista_pedidos')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Filtrorellista_pedidos')"><div class="barheader">{{'Sintético por Data' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('sintetico_por_data')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Filtrorelsintetico_por_data')"><div class="barheader">{{'Sintético por Categoria' | translate }}</div></a></li> 
+              <li *ngIf="permissaoTela('sintetico_por_cardapio')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Filtrorelsintetico_por_cardapio')"><div class="barheader">{{'Sintético por Produto' | translate }}</div></a></li> 
+              <li class="nav-item"><a id="link_cor" class="link_menu" (click)="filtrorelusuarios()"><div class="barheader">{{'Compradores' | translate }}</div></a></li> 
+            </mat-expansion-panel> 
+            <!--
+            <mat-expansion-panel> 
+            <mat-expansion-panel-header>  
+              <mat-panel-title> 
+                {{'Apontamentos' | translate}} 
+              </mat-panel-title> 
+            </mat-expansion-panel-header>  
+              <li *ngIf="permissaoTela('checklist_pedidos')" class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Filtrorelchecklist_pedidos')"><div class="barheader">{{'CheckList Pedidos' | translate }}</div></a></li> 
+            </mat-expansion-panel> -->
+
+            <div *ngIf="getTipoGrupo$ | async as getTipoGrupo"><mat-expansion-panel> 
+              <mat-expansion-panel-header> 
+                <mat-panel-title> 
+                  {{'Administração' | translate}} 
+                </mat-panel-title> 
+              </mat-expansion-panel-header>  
+                <li class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listargrupo_usuarios')"><div class="barheader">{{'Grupo de Usuários' | translate }}</div></a></li>  
+                <li class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarusuarios')"><div class="barheader">{{'Usuários' | translate }}</div></a></li> 
+                <li class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listarpermissoes_tabelas')"><div class="barheader">{{'Permissões' | translate }}</div></a></li> 
+                <li class="nav-item"><a id="link_cor" class="link_menu" (click)="LoadLink('/Listartabelas')"><div class="barheader">{{'Dicionário' | translate }}</div></a></li> 
+              </mat-expansion-panel></div> 
+          </mat-accordion>
+          <li><button mat-button (click)="onLogout()" *ngIf="getStatus_logado$ | async as getStatus_logado">Logout</button> </li>
+        </ul> 
+      </div>  
+      <!--<div id="centro" align="center" class="btn-group" >   
+        <a *ngFor="let lang of supportedLangs" 
+          (click)="selectLang(lang.value)" 
+          class="btn btn-light" [class.btn-primary]="isCurrentLang(lang.value)">  
+          {{ lang.display }} 
+        </a> 
+      </div>  -->   
+    </nav>  
+  </div> 
+</div>

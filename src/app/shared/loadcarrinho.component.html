@@ -1,0 +1,49 @@
+<form #form="ngForm" autocomplete="off">
+  <div align="center">
+    <div class="barheader" align="center">Itens no Carrinho</div>  
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+        <div class="example-container-100" align="center">  
+                  <!-- TABELA DE ITENS -->  
+                <table align="center"> 
+
+                  <tbody>  
+                    <tr *ngFor="let itemitens of apiService.Itemsitens; let i=index;">
+                      <td colspan="4">
+                        <div class="pborder" align="center">
+                        <table align="center">
+                          <tr><td class="ptitle" width="280px"colspan="4">{{itemitens.car_nome | unescape}}</td></tr>                       
+                          <tr>
+
+                            <div *ngIf="Device=='M'">
+                              <table width="100%">
+                                <tr>
+                                  <td class="ptitle" width="70px">Preço {{itemitens.ite_preco}}</td> 
+                                  <td class="ptitle" width="70px">Qtde. {{itemitens.ite_qtde}}</td> 
+                                </tr>
+                                <tr>
+                                  <td class="ptitle" width="70px">SubTotal {{itemitens.ite_subtotal | currency:'BRL'}}</td> 
+                                  <td width="20px"><a matTooltip="{{'Excluir' | translate}}"  (click)="onDeleteItensitens(itemitens.ite_codigo,i)"><mat-icon>delete</mat-icon></a></td>
+                                </tr>
+                              </table>  
+                            </div>  
+                            <div *ngIf="Device=='D'||Device=='T'">
+                              <td class="pprice" width="70px">{{itemitens.ite_preco}}</td> 
+                              <td class="pprice" width="70px">{{itemitens.ite_qtde}}</td> 
+                              <td class="pprice" width="70px">{{itemitens.ite_subtotal | currency:'BRL'}}</td> 
+                              <td width="20px"><a matTooltip="{{'Excluir' | translate}}"  (click)="onDeleteItensitens(itemitens.ite_codigo,i)"><mat-icon>delete</mat-icon></a></td>
+                            </div>  
+                          </tr> 
+                        </table> 
+                      </div>
+                      </td>
+                    </tr>  
+                  </tbody> 
+                </table>  
+    
+    </div>
+  </cdk-virtual-scroll-viewport>
+    <div class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>
+  </div>
+  </form>  
+    
+  

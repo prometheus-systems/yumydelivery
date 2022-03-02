@@ -1,0 +1,57 @@
+﻿<div [@bounce]="bounce">
+<div align="left">
+<button id="btnback1" name="btnback1" class="btn_amarelo" matTooltip="Voltar" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button>
+</div> 
+<div class="example-container" align="center">
+  <div class="barheader">{{'RELATÓRIO DE' | translate}} {{'Endereço' | translate | uppercase}}</div>
+  <div><p>{{apiService.strParametros}}</p></div>
+      <table class="table table-borderless" align="center" width="100%"> 
+        <thead class="thead-light"> 
+        <th>{{'Código' | translate}}</th>
+        <th>{{'Endereço' | translate}}</th>
+        <th>{{'Bairro' | translate}}</th>
+        <th>{{'UF' | translate}}</th>
+        <th>{{'Referencia' | translate}}</th>
+        <th>{{'Numero' | translate}}</th>
+        <th>{{'Complemento' | translate}}</th>
+        <th>{{'Cidade' | translate}}</th>
+        <th>{{'CEP' | translate}}</th>
+        <th>{{'Longitude' | translate}}</th>
+        <th>{{'Latitude' | translate}}</th>
+        </thead> 
+        <tbody> 
+          <tr *ngFor="let endereco of apiService.arrendereco"> 
+           <td>{{endereco.end_codigo}}</td>
+           <td>{{endereco.end_endereco | unescape}}</td>
+           <td>{{endereco.end_bairro | unescape}}</td>
+           <td>{{endereco.end_uf}}</td>
+           <td>{{endereco.end_referencia | unescape}}</td>
+           <td>{{endereco.end_numero}}</td>
+           <td>{{endereco.end_complemento | unescape}}</td>
+           <td>{{endereco.end_cidade | unescape}}</td>
+           <td>{{endereco.end_cep}}</td>
+           <td>{{endereco.end_long}}</td>
+           <td>{{endereco.end_lat}}</td>
+          </tr> 
+          <tr id="thead-light" *ngIf="tem_total">
+          <td>{{'TOTAL GERAL' | translate}}</td> 
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr> 
+        </tbody> 
+      </table> 
+  <div align="right"> 
+     <button [disabled]=true id="btnchart" name="btnchart" class="btn_amarelo" matTooltip="{{'Gráficos' | translate}}" (click)="GoogleChart()"><mat-icon>pie_chart</mat-icon></button> 
+     <button id="btnprint" name="btnprint" class="btn_amarelo" matTooltip="{{'Imprimir' | translate}}" (click)="Imprimir()"><mat-icon>printer</mat-icon></button> 
+     <button id="btnback" name="btnback" class="btn_amarelo" matTooltip="{{'Voltar' | translate}}" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button> 
+  </div> 
+</div> 
+</div>

@@ -1,0 +1,55 @@
+﻿<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='U'" class="text-center">TABELAS</div> 
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" class="text-center">INSERIR TABELAS</div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="tab_codigo" #tab_codigo="ngModel" [(ngModel)]="apiService.formData.tab_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="Código"  min="0" [disabled]="true" name="tab_codigo" #tab_codigo="ngModel" [(ngModel)]="apiService.formData.tab_codigo" > 
+    </mat-form-field> 
+  </div> 
+        <div class="example-container">
+    <mat-form-field> 
+      <input [disabled]="true"  matInput placeholder="Nome" name="tab_nome" #tab_nome="ngModel" [(ngModel)]="apiService.formData.tab_nome"> 
+      <mat-error>Nome é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field> 
+      <input [disabled]="true"  matInput placeholder="Título" name="tab_titulo" #tab_titulo="ngModel" [(ngModel)]="apiService.formData.tab_titulo"> 
+      <mat-error>Título é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+  <hr>
+  <h4>Campos</h4> 
+  <!-- TABELA DE ITENS -->  
+  <table class="table table-borderless"> 
+    <thead class="thead-light"> 
+      <th>Nome</th> 
+      <th>Título</th> 
+      <th> 
+        <!-- <a class="btn_amarelo" matTooltip="Adicionar" (click)="FormItemcampos(null,apiService.formData.tab_codigo)"><mat-icon>add</mat-icon></a> -->
+      </th> 
+    </thead> 
+    <tbody> 
+
+      <tr *ngFor="let itemcampos of apiService.Itemscampos; let i=index;">  
+        <td>{{itemcampos.cmp_nome}}</td> 
+        <td>{{itemcampos.cmp_descricao}}</td> 
+        
+        <td> 
+       <!--   <a class="btn_amarelo" matTooltip="Editar" (click)="FormItemcampos(i,apiService.formData.tab_codigo)"><mat-icon>edit</mat-icon></a>  
+          <a class="btn_amarelo" matTooltip="Excluir"  (click)="onDeleteItenscampos(itemcampos.cmp_codigo,i)"><mat-icon>delete</mat-icon></a> 
+          -->
+        </td> 
+      </tr>  
+    </tbody> 
+  </table>  
+  <div class="button-row"> 
+    <!--<button type="submit" class="btn_amarelo" [disabled]="!validateForm">Gravar</button>  -->
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>Voltar</button> 
+  </div> 
+</form> 

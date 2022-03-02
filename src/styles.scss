@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+@include mat-core();
+$prometheus-build-primary: mat-palette($mat-yellow,A800);
+$prometheus-build-accent: mat-palette($mat-orange, A200, A100, A400);
+$prometheus-build-warn: mat-palette($mat-deep-orange);
+$prometheus-build-theme:mat-light-theme($prometheus-build-primary, $prometheus-build-accent, $prometheus-build-warn);
+@include angular-material-theme($prometheus-build-theme);
+@include mat-core-theme($prometheus-build-theme);
+@include mat-button-theme($prometheus-build-theme);
+@include mat-checkbox-theme($prometheus-build-theme);
+
+.general-content-body > .row {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+html, body { background:rgb(255, 255, 255); height: 100%; }
+body { margin: 0; font-family: 'Poppins',sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

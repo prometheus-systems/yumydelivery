@@ -1,0 +1,75 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off" *ngIf="apiService.formParRel"> 
+  <div class="example-container"  align="center">  
+    <div class="barheader">ACOMPANHAMENTO DE PEDIDOS</div>
+    <div *ngIf="!temResultado">           
+      <mat-form-field> 
+        <input matInput [matDatepicker]="data1" placeholder="Data Inicial" name="data1" [(ngModel)]="apiService.formParRel.data1">  
+        <mat-datepicker-toggle matSuffix [for]="data1"></mat-datepicker-toggle> 
+        <mat-datepicker #data1></mat-datepicker> 
+      </mat-form-field> 
+      &nbsp;
+      <mat-form-field> 
+        <input matInput [matDatepicker]="data2" placeholder="Data Final" name="data2" [(ngModel)]="apiService.formParRel.data2">  
+        <mat-datepicker-toggle matSuffix [for]="data2"></mat-datepicker-toggle> 
+        <mat-datepicker #data2></mat-datepicker> 
+      </mat-form-field> 
+      <br/>
+      <button (click)="onVerificar()" class="btn_amarelo">Consultar</button>
+     </div> 
+    
+    <div class="example-container" align="center"> 
+
+
+        <div align="center">
+          <cdk-virtual-scroll-viewport orientation="horizontal" class="item-pedido" itemSize="200" >  
+          <table>
+              <tr  >
+                  <td *ngFor="let pedido of arrpedidosbalcao">                       
+                      
+                      <div class="card3">
+                        <table align="center" width="50%">
+                          <tr>
+                            <td><button (click)="btn_saiu(pedido.codigo,pedido)" class="btn_retirado">Retirado</button></td>
+                            <td><button (click)="btn_entregue(pedido.codigo,pedido)" class="btn_entregue">Entregue</button></td>
+                          </tr>
+                        </table>
+                        
+                        <div [ngClass]="{'retirado': pedido.status=='RETIRADO','entregue': pedido.status=='ENTREGUE','pronto': pedido.status=='PRONTO'}">
+                          <div align="center" class="ptitle">Status: {{pedido.status}}</div>
+                        </div>
+                        <div align="center"><p><b>{{pedido.produto| unescape}}</b></p></div>
+                          <img [src]="pedido.imagem" *ngIf="Device!='M'">
+                          <div align="center"><p class="ptitle"><b>{{pedido.cliente | unescape}}</b></p></div>
+                          <div align="center" class="destaque">
+                            <div align="center">
+                              <table>
+                                <tr>
+                                  <td><div>Pedido: {{pedido.datahora | date:'dd/MM/yyyy HH:mm'}}</div></td>
+                                </tr>
+                                <tr>
+                                  <td><div *ngIf="pedido.pronto!=='0000-00-00 00:00:00'">Pronto:  {{pedido.pronto  | date:'dd/MM/yyyy HH:mm'}}</div></td>
+                                </tr>
+                                <tr>                       
+                                  <td><div *ngIf="pedido.retirado!=='0000-00-00 00:00:00'">Retirou: {{pedido.retirado | date:'dd/MM/yyyy HH:mm'}}</div></td>
+                                </tr>
+                              </table>
+                            </div>
+                            <div align="center">Qtde.:{{pedido.qtde}} - Total:{{pedido.total | currency:'BRL'}}</div>
+                          
+                          <div align="center" *ngIf="pedido.observacoes!==null"><p class="pdescription">{{pedido.observacoes | unescape}}</p></div>
+  
+                          </div>
+                      </div>
+                  
+                  </td>
+              </tr> 
+          </table>
+          </cdk-virtual-scroll-viewport>
+        </div>
+  
+  </div>
+</div>
+</form>
+
+</div>

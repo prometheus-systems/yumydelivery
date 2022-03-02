@@ -1,0 +1,58 @@
+<form #form="ngForm" autocomplete="off">
+  <div align="center">
+    <div class="barheader" align="center">Histórico de Compras</div>  
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+        <div class="example-container" align="center">  
+                  <!-- TABELA DE ITENS -->  
+                <table align="center" width="200px"> 
+
+                   
+                    <tr *ngFor="let histPedidos of apiService.arrhistPedidos; let i=index;" class="pborder" align="center">
+                 
+                      <td>
+                        <table *ngIf="Device=='D'||Device=='T'" align="left">
+                          <tr><td align="left" class="pdescription">{{histPedidos.data | date:'dd/MM/yyyy'}}</td></tr>
+                          <tr><td align="left"><div align="left" class="scroll" *ngIf="histPedidos.logo!=''"><img [src]="histPedidos.logo"></div></td></tr>
+                          <tr><td align="left" class="pdescription">{{histPedidos.vendedor | unescape}}</td></tr>
+                        </table>
+                      </td>
+                      <td>
+                        
+                        <table align="center" *ngIf="Device=='D'||Device=='T'">
+                          <tr><td class="ptitle"colspan="3">{{histPedidos.produto | unescape}}</td></tr>                       
+                          <tr>
+                            <td class="pprice">{{histPedidos.preco | currency:'BRL'}}</td> 
+                            <td class="pprice">{{histPedidos.qtde}}</td> 
+                            <td class="pprice">{{histPedidos.total | currency:'BRL'}}</td> 
+                          </tr> 
+                        </table> 
+
+                        <table align="center" *ngIf="Device=='M'">
+                          <tr><td class="ptitle"colspan="3">{{histPedidos.produto | unescape}}</td></tr>                       
+                          <tr>
+                            <td colspan="3" class="ptitle">{{histPedidos.data | date:'dd/MM/yyyy'}}</td>                 
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="ptitle">{{histPedidos.vendedor | unescape}}</td>
+                          </tr>
+                          <tr>    
+                            <td class="ptitle">{{histPedidos.preco | currency:'BRL'}}</td>                         
+                            <td class="ptitle">{{histPedidos.qtde}}</td> 
+                            <td class="ptitle">{{histPedidos.total | currency:'BRL'}}</td> 
+                          </tr> 
+                        </table> 
+                      
+                      </td>
+               
+                    </tr>  
+                  
+           
+                </table>  
+    
+    </div>
+  </cdk-virtual-scroll-viewport>
+    <div class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>
+  </div>
+  </form>  
+    
+  

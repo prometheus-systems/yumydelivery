@@ -1,0 +1,32 @@
+﻿<div [@bounce]="bounce">
+  <div class="example-container" align="center">  
+    <div class="barheader">PEDIDOS NA COZINHA</div>
+
+
+          <div align="center">
+            <cdk-virtual-scroll-viewport orientation="horizontal" class="item-pedido" itemSize="200" >  
+            <table>
+                <tr>
+                    <td *ngFor="let pedido of arrpedidos">
+                        <div class="card3">                          
+                            
+                            <div align="center" class="text-destak-medio">Data/Hora: {{pedido.datahora | date:'dd/MM/yyyy HH:mm'}}</div>
+                            <div align="center"><img [src]="pedido.imagem"></div>
+                            <div align="center">
+                              <button (click)="onPronto(pedido)" class="btn_amarelo">Pronto...</button>&nbsp;
+                              <button *ngIf="pedido.temSabor" (click)="sabores(pedido.sabores)"class="btn_amarelo">Sabores</button>
+                            </div>
+                            <div align="center"><p class="text-destak-medio-ver"><b>QUANTIDADE: {{pedido.qtde}}</b></p></div>
+                                <div align="center"><p class="text-destak-medio"><b>{{pedido.produto | unescape}}</b></p></div>
+                            <div align="center" *ngIf="pedido.observacoes!==null" class="info1">{{pedido.observacoes | unescape}}</div>
+    
+                        </div>
+                    
+                    </td>
+                </tr> 
+            </table>
+            </cdk-virtual-scroll-viewport>
+          </div>
+
+      </div>
+</div>

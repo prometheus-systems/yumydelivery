@@ -1,0 +1,21 @@
+﻿<div [@bounce]="bounce">
+<div align="center" class="example-container"> 
+<google-chart #chart  
+   [title]="title" 
+   [type]="type" 
+   [data]="data" 
+   [columns]="columnNames" 
+   [options]="options"  
+   [width]="width"
+   [height]="height"> 
+</google-chart>  
+<div align="right"> 
+   <button id="btngauge" name="btngauge" class="btn_amarelo" matTooltip="GAUGE" (click)="Chartgauge()"><mat-icon>bubble_chart</mat-icon></button> 
+   <button id="btnpie" name="btnpie" class="btn_amarelo" matTooltip="PIZZA" (click)="ChartPie()"><mat-icon>pie_chart</mat-icon></button> 
+   <button id="btnline" name="btnline" class="btn_amarelo" matTooltip="LINHAS" (click)="ChartLine()"><mat-icon>show_chart</mat-icon></button> 
+   <button id="btnbar" name="btnbar" class="btn_amarelo" matTooltip="BARRAS" (click)="ChartBar()"><mat-icon>bar_chart</mat-icon></button> 
+   <button id="btnprint" name="btnprint" class="btn_amarelo" matTooltip="Imprimir" (click)="Imprimir()"><mat-icon>printer</mat-icon></button> 
+   <button id="btnback" name="btnback" class="btn_amarelo" matTooltip="Voltar" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button>
+</div> 
+</div>
+</div>

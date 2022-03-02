@@ -1,0 +1,23 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off">  
+    <div class="example-container" align="center">
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+            <h4><b><p>{{'cadastro de' | translate | uppercase}} {{'Cardápio' | translate | uppercase}} </p></b></h4> 
+              <p>{{'Cardápio do Estabelecimento' | translate}}</p> 
+              <h6><p><b>{{'CAMPOS' | translate}}:</b></p></h6> 
+              <p><b>{{'Ativo' | translate}}: </b>{{'Cadastro Ativo' | translate}}</p> 
+              <p><b>{{'Código' | translate}}: </b>{{'Codigo' | translate}}</p> 
+              <p><b>{{'Descrição' | translate}}: </b>{{'Descrição do Prato' | translate}}</p> 
+              <p><b>{{'Estoque' | translate}}: </b>{{'Estoque do Produto' | translate}}</p> 
+              <p><b>{{'Imagem' | translate}}: </b>{{'Imagem do Prato' | translate}}</p> 
+              <p><b>{{'Nome' | translate}}: </b>{{'Nome do Prato' | translate}}</p> 
+              <p><b>{{'Valor' | translate}}: </b>{{'Valor do Prato' | translate}}</p> 
+              <p><b>{{'Categorias' | translate}}: </b>{{'Codigo' | translate}}</p> 
+              <p><b>{{'Vendedores' | translate}}: </b>{{'Vendedor' | translate}}</p> 
+
+        </cdk-virtual-scroll-viewport> 
+    </div>  
+    <hr> 
+    <div><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div> 
+  </form> 
+</div>

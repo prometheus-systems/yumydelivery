@@ -1,0 +1,109 @@
+﻿<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div align="center">  
+  <div class="example-container" align="center">  
+    <div class="row"> 
+      <div class="col-sm"> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Cardápio' | translate | uppercase}}</div> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Cardápio' | translate | uppercase}}</div>  
+      </div>
+      <div class="col-sm-0"> 
+        <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('cardapio')"><mat-icon>help</mat-icon></a>  
+      </div> 
+    </div>  
+  </div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="car_codigo" #car_codigo="ngModel" [(ngModel)]="apiService.formData.car_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="car_codigo" #car_codigo="ngModel" [(ngModel)]="apiService.formData.car_codigo" > 
+    </mat-form-field> 
+  </div>
+
+    <div class="example-container" align="center">  
+      <mat-form-field> 
+        <mat-label>{{'Categoria' | translate}}</mat-label>
+        <mat-select name="cat_codigo" #cat_codigo="ngModel" [(ngModel)]="apiService.formData.cat_codigo"> 
+          <mat-option *ngFor="let categoria of arrcategorias | async" [value]="categoria.cat_codigo">
+            {{categoria.cat_nome | unescape}} 
+          </mat-option> 
+        </mat-select> 
+        <mat-error>{{'Categoria' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+      </mat-form-field> 
+    </div> 
+
+
+
+   
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.car_nome"> 
+      <input [readonly]="apiService.formDisabled.car_nome" matInput placeholder="{{'Nome' | translate}}" [value]="apiService.formData.car_nome | unescape" name="car_nome" #car_nome="ngModel" [(ngModel)]="apiService.formData.car_nome" appUnscape> 
+      <mat-error>{{'Nome' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.car_valor"> 
+      <input [readonly]="apiService.formDisabled.car_valor" matInput type="number" min="0.0" placeholder="{{'Valor' | translate}}"   name="car_valor" #car_valor="ngModel" [(ngModel)]="apiService.formData.car_valor" > 
+      <mat-error>{{'Valor' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+      
+        <div class="example-container" *ngIf="apiService.formVisible.car_descricao"> 
+    <mat-form-field>
+      <textarea [readonly]="apiService.formDisabled.car_descricao" matInput placeholder="{{'Descrição' | translate}}" name="car_descricao" #car_descricao="ngModel" [(ngModel)]="apiService.formData.car_descricao" appUnscape></textarea> 
+    <mat-error>{{'Descrição' | translate}} {{'é obrigatório' | translate}}!.</mat-error>
+    </mat-form-field>
+  </div> 
+ 
+        <div class="example-container" *ngIf="apiService.formVisible.car_imagen"> 
+    <mat-form-field> 
+      <ngx-mat-file-input (change)="selectFile($event)" [disabled]="apiService.formDisabled.car_imagen" placeholder="CLICK AQUI PARA UPLOAD DA IMAGEM"   name="car_imagen" #car_imagen="ngModel" [(ngModel)]="apiService.formData.car_imagen" (change)="onFileSelect($event)"></ngx-mat-file-input> 
+    </mat-form-field> 
+    <button type="button" class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">ENVIAR IMAGEM</button>
+    <div > 
+    <div *ngIf="apiService.formData.car_imagen!='[object Object]'" >  <img *ngIf="apiService.formData.car_imagen" class="reframe-round" [src]="apiService.formData.car_imagen"/></div> 
+    </div> 
+  </div><hr> 
+
+        <div class="add-bottom-padding" *ngIf="apiService.formVisible.car_ativo"> 
+    <mat-checkbox [disabled]="apiService.formDisabled.car_ativo" name="car_ativo" #car_ativo="ngModel" [(ngModel)]="apiService.formData.car_ativo">{{'Ativo' | translate}}</mat-checkbox>
+  </div> 
+
+        <div *ngIf="apiService.formVisible.ven_codigo"> 
+    <div class="example-container" *ngIf="apiService.formDisabled.ven_codigo"> 
+    <mat-form-field> 
+      <input [readonly]="true" matInput name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+    </mat-form-field> 
+    </div>
+ <div *ngIf="TipoGrupo=='A'">
+  <div class="example-container" *ngIf="!apiService.formDisabled.ven_codigo">    <mat-form-field> 
+      <mat-label>{{'Vendedores' | translate}}</mat-label>
+      <mat-select name="ven_codigo" #ven_codigo="ngModel" [(ngModel)]="apiService.formData.ven_codigo"> 
+        <mat-option *ngFor="let vendedores of arrvendedores | async" [value]="vendedores.ven_codigo">
+          {{vendedores.ven_nome}} 
+        </mat-option> 
+      </mat-select> 
+      <mat-error>{{'Vendedores' | translate}} {{'é obrigatório' | translate}}.</mat-error>
+    </mat-form-field> 
+  </div> 
+  </div>
+</div>
+
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.car_estoque"> 
+      <input [readonly]="apiService.formDisabled.car_estoque" matInput type="number" placeholder="{{'Estoque' | translate}}"  min="0" name="car_estoque" #car_estoque="ngModel" [(ngModel)]="apiService.formData.car_estoque" > 
+      <mat-error>{{'Estoque' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+  </div> 
+</div>
+</form> 
+
+</div> 

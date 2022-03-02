@@ -1,0 +1,22 @@
+﻿ 
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formParRel" (submit)="onSubmit(form)"> 
+ <hr> 
+ <div class="barheader"class="text-center">FILTRO RELATÓRIOS PERMISSÕES TABELAS</div> 
+ <hr> 
+    <div class="example-container"> 
+    <mat-form-field> 
+      <mat-label>Título</mat-label>
+      <mat-select name="par_tab_titulo" #par_tab_titulo="ngModel" [(ngModel)]="apiService.formParRel.par_tab_titulo"> 
+        <mat-option [value]="">TODAS</mat-option> 
+        <mat-option *ngFor="let tabelas of arrtabelas" [value]="tabelas.tab_titulo">
+          {{tabelas.tab_titulo}} 
+        </mat-option> 
+      </mat-select> 
+    </mat-form-field> 
+  </div> 
+ 
+<div class="button-row"> 
+   <button type="submit" class="btn_amarelo" [disabled]="!validateForm">Imprimir</button> 
+   <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i> Cancelar</button> 
+</div> 
+</form> 

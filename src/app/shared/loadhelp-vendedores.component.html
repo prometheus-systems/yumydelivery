@@ -1,0 +1,33 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off">  
+    <div class="example-container" align="center">
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+            <h4><b><p>{{'cadastro de' | translate | uppercase}} {{'Vendedores' | translate | uppercase}} </p></b></h4> 
+              <p>{{'Cadastro de estabelecimentos gastrônomicos' | translate}}</p> 
+              <h6><p><b>{{'CAMPOS' | translate}}:</b></p></h6> 
+              <p><b>{{'Ativo' | translate}}: </b>{{'Cadastro Ativo' | translate}}</p> 
+              <p><b>{{'Bairro' | translate}}: </b>{{'Bairro' | translate}}</p> 
+              <p><b>{{'CEP' | translate}}: </b>{{'CEP' | translate}}</p> 
+              <p><b>{{'Cidade' | translate}}: </b>{{'Cidade' | translate}}</p> 
+              <p><b>{{'CNPJ' | translate}}: </b>{{'CNPJ' | translate}}</p> 
+              <p><b>{{'Código' | translate}}: </b>{{'Codigo' | translate}}</p> 
+              <p><b>{{'Complemento' | translate}}: </b>{{'Complemento' | translate}}</p> 
+              <p><b>{{'E-mail' | translate}}: </b>{{'E-mail' | translate}}</p> 
+              <p><b>{{'Endereço' | translate}}: </b>{{'Endereço' | translate}}</p> 
+              <p><b>{{'Fone' | translate}}: </b>{{'Telefone de Contato' | translate}}</p> 
+              <p><b>{{'Horário de Funcionamento' | translate}}: </b>{{'Horário de Funcionamento' | translate}}</p> 
+              <p><b>{{'Informações Adicionais/Observações' | translate}}: </b>{{'Informações adicionas e Observações' | translate}}</p> 
+              <p><b>{{'Latitude' | translate}}: </b>{{'Latitude(Geolocalização)' | translate}}</p> 
+              <p><b>{{'Login' | translate}}: </b>{{'Login' | translate}}</p> 
+              <p><b>{{'Longitude' | translate}}: </b>{{'Longitude (Geolocalização)' | translate}}</p> 
+              <p><b>{{'Nome' | translate}}: </b>{{'Nome do Vendedores' | translate}}</p> 
+              <p><b>{{'Número' | translate}}: </b>{{'Número(Endereço)' | translate}}</p> 
+              <p><b>{{'Senha' | translate}}: </b>{{'Senha' | translate}}</p> 
+              <p><b>{{'UF' | translate}}: </b>{{'UF' | translate}}</p> 
+
+        </cdk-virtual-scroll-viewport> 
+    </div>  
+    <hr> 
+    <div><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div> 
+  </form> 
+</div>

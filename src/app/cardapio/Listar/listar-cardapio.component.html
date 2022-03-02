@@ -1,0 +1,94 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Cardápio' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_CODIGO-->
+    <ng-container matColumnDef="car_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_codigo">{{element.car_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+    <!--COLUNA TABELA LISTA CAR_NOME-->
+    <ng-container matColumnDef="car_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_nome">{{'Nome' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_nome">{{element.car_nome | unescape}} </div> </td>
+    </ng-container> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_NOME-->
+    <ng-container matColumnDef="ven_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_codigo">{{'Vendedores' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_codigo">{{element.ven_nome | unescape}} </div> </td>
+    </ng-container> 
+    </div>
+    <!--COLUNA TABELA LISTA CAR_VALOR-->
+    <ng-container matColumnDef="car_valor"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_valor">{{'Valor' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_valor">{{element.car_valor}} </div> </td>
+    </ng-container> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_DESCRICAO-->
+    <ng-container matColumnDef="car_descricao"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_descricao">{{'Descrição' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_descricao">{{element.car_descricao | unescape}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_IMAGEN-->
+    <ng-container matColumnDef="car_imagen"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_imagen">{{'Imagem' | translate}}</div> </th> 
+      <td><mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"><img *ngIf="apiService.formVisible.car_imagen" class="reframe-round" [src]="element.car_imagen" (click)="onClickViewImage(element.car_imagen)"/> </mat-cell></td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_ATIVO-->
+    <ng-container matColumnDef="car_ativo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_ativo">{{'Ativo' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_ativo"><mat-icon *ngIf="element.car_ativo">checked</mat-icon></div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_ESTOQUE-->
+    <ng-container matColumnDef="car_estoque"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_estoque">{{'Estoque' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_estoque">{{element.car_estoque}} </div> </td>
+    </ng-container> 
+    </div>
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button *ngIf="permissaoDelete('cardapio')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deletecardapio(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editcardapio(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <button *ngIf="permissaoInsert('cardapio')" type="button" (click)="insertcardapio()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelcardapio()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+    <button type="button" (click)="importarCardapio()" class="btn_amarelo" >Importar</button>
+  </div> 
+</div> 
+</div>
+</div>

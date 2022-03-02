@@ -1,0 +1,21 @@
+<!--<form (submit)="handleForm($event)">
+  <div align="center">
+    <div #cardElement>
+    </div>
+    <p>{{ cardErrors }}</p>
+    <button class="btn_amarelo" > {{data.total | currency:'BRL'}}</button>
+  </div>
+-->
+<form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
+  <div class="form-row">
+    <label for="card-info">Cartão de Crédito</label>
+    <div id="card-info" #cardInfo></div>
+
+    <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+  </div>
+
+  <button type="submit">{{data.total | currency:'BRL'}}</button>
+</form>
+
+<div *ngIf="loading">Loading....</div>
+<div class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>

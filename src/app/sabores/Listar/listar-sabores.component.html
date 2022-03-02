@@ -1,0 +1,94 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Sabores' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA SAB_CODIGO-->
+    <ng-container matColumnDef="sab_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.sab_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.sab_codigo">{{element.sab_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+   
+    <!--COLUNA TABELA LISTA SAB_NOME-->
+    <ng-container matColumnDef="sab_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.sab_nome">{{'Nome' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.sab_nome">{{element.sab_nome}} </div> </td>
+    </ng-container> 
+   
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAR_NOME-->
+    <ng-container matColumnDef="car_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.car_codigo">{{'Cardápio' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.car_codigo">{{element.car_nome | unescape}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA SAB_VALOR-->
+    <ng-container matColumnDef="sab_valor"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.sab_valor">{{'Valor Adicional' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.sab_valor">{{element.sab_valor}} </div> </td>
+    </ng-container> 
+    </div>
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button *ngIf="permissaoDelete('sabores')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deletesabores(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editsabores(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <button *ngIf="permissaoInsert('sabores')" type="button" (click)="insertsabores()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelsabores()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+  </div> 
+</div> 
+<div align="center" class="barracopia">
+  <div align="center">Copiar Sabores</div>
+  <div>    
+    <mat-form-field> 
+      <mat-label>DE</mat-label>
+      <mat-select name="car_codigo1_" #car_codigo_1="ngModel" [(ngModel)]="car_codigo1"> 
+        <mat-option *ngFor="let cardapio of arrcardapio" [value]="cardapio.car_codigo">
+          {{cardapio.car_nome | unescape}} 
+        </mat-option> 
+      </mat-select> 
+    </mat-form-field> 
+    &nbsp;
+    <mat-form-field> 
+      <mat-label>PARA</mat-label>
+      <mat-select name="car_codigo_2" #car_codigo_2="ngModel" [(ngModel)]="car_codigo2"> 
+        <mat-option *ngFor="let cardapio of arrcardapio" [value]="cardapio.car_codigo">
+          {{cardapio.car_nome | unescape}} 
+        </mat-option> 
+      </mat-select> 
+    </mat-form-field> 
+    <button class="btn_amarelo" (click)="copiar()">Copiar</button>
+
+  </div>
+  
+</div>
+</div>
+</div>

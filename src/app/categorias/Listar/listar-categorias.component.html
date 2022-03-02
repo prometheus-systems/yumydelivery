@@ -1,0 +1,62 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Categorias' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAT_CODIGO-->
+    <ng-container matColumnDef="cat_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.cat_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.cat_codigo">{{element.cat_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+
+    <!--COLUNA TABELA LISTA CAT_NOME-->
+    <ng-container matColumnDef="cat_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.cat_nome">{{'Descrição' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.cat_nome">{{element.cat_nome}} </div> </td>
+    </ng-container> 
+
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA CAT_IMAGEM-->
+    <ng-container matColumnDef="cat_imagem"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.cat_imagem">{{'Imagem' | translate}}</div> </th> 
+      <td><mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"><img *ngIf="apiService.formVisible.cat_imagem" class="reframe-round" [src]="element.cat_imagem" (click)="onClickViewImage(element.cat_imagem)"/> </mat-cell></td>
+    </ng-container> 
+    </div>
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button *ngIf="permissaoDelete('categorias')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deletecategorias(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editcategorias(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <button *ngIf="permissaoInsert('categorias')" type="button" (click)="insertcategorias()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelcategorias()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+  </div> 
+</div> 
+</div>
+</div>

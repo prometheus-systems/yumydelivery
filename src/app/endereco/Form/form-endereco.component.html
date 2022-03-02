@@ -1,0 +1,98 @@
+﻿<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div align="center">
+  <div class="example-container" align="center">  
+    <div class="row"> 
+      <div class="col-sm"> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='U'">{{'EDITAR' | translate}} {{'Endereço' | translate | uppercase}}</div> 
+        <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" >{{'INSERIR' | translate}} {{'Endereço' | translate | uppercase}}</div>  
+      </div>
+      <div class="col-sm-0"> 
+        <a mat-icon-button matTooltip="Help" aria-label="Help" (click)="goHelp('endereco')"><mat-icon>help</mat-icon></a>  
+      </div> 
+    </div>  
+  </div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="end_codigo" #end_codigo="ngModel" [(ngModel)]="apiService.formData.end_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="{{'Código' | translate}}"  min="0" [disabled]="true" name="end_codigo" #end_codigo="ngModel" [(ngModel)]="apiService.formData.end_codigo" > 
+    </mat-form-field> 
+  </div> 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_endereco"> 
+      <input [readonly]="apiService.formDisabled.end_endereco" matInput placeholder="{{'Endereço' | translate}}" name="end_endereco" #end_endereco="ngModel" [(ngModel)]="apiService.formData.end_endereco" appUnscape>
+      <mat-error>{{'Endereço' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_bairro"> 
+      <input [readonly]="apiService.formDisabled.end_bairro" matInput placeholder="{{'Bairro' | translate}}" name="end_bairro" #end_bairro="ngModel" [(ngModel)]="apiService.formData.end_bairro" appUnscape> 
+      <mat-error>{{'Bairro' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_cep"> 
+      <input [readonly]="apiService.formDisabled.end_cep" mask="00000-000" matInput placeholder="{{'CEP' | translate}}" name="end_cep" #end_cep="ngModel" [(ngModel)]="apiService.formData.end_cep"> 
+      <mat-error>{{'CEP' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_cidade"> 
+      <input [readonly]="apiService.formDisabled.end_cidade" matInput placeholder="{{'Cidade' | translate}}" name="end_cidade" #end_cidade="ngModel" [(ngModel)]="apiService.formData.end_cidade" appUnscape> 
+      <mat-error>{{'Cidade' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_complemento"> 
+      <input [readonly]="apiService.formDisabled.end_complemento" matInput placeholder="{{'Complemento' | translate}}" name="end_complemento" #end_complemento="ngModel" [(ngModel)]="apiService.formData.end_complemento" appUnscape> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_numero"> 
+      <input [readonly]="apiService.formDisabled.end_numero" matInput placeholder="{{'Numero' | translate}}" name="end_numero" #end_numero="ngModel" [(ngModel)]="apiService.formData.end_numero"> 
+      <mat-error>{{'Numero' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_referencia"> 
+      <input [readonly]="apiService.formDisabled.end_referencia" matInput placeholder="{{'Referencia' | translate}}" name="end_referencia" #end_referencia="ngModel" [(ngModel)]="apiService.formData.end_referencia" appUnscape> 
+      <mat-error>{{'Referencia' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container">
+    <mat-form-field *ngIf="apiService.formVisible.end_uf"> 
+      <input [readonly]="apiService.formDisabled.end_uf" matInput placeholder="{{'UF' | translate}}" name="end_uf" #end_uf="ngModel" [(ngModel)]="apiService.formData.end_uf" mask="AA"> 
+      <mat-error>{{'UF' | translate | uppercase}} {{'é obrigatório' | translate}}!</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.end_long"> 
+      <input [readonly]="apiService.formDisabled.end_long" matInput type="number" min="0.0" placeholder="{{'Longitude' | translate}}"   name="end_long" #end_long="ngModel" [(ngModel)]="apiService.formData.end_long" > 
+      <mat-error>{{'Longitude' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+        <div class="example-container"> 
+    <mat-form-field *ngIf="apiService.formVisible.end_lat"> 
+      <input [readonly]="apiService.formDisabled.end_lat" matInput type="number" min="0.0" placeholder="{{'Latitude' | translate}}"   name="end_lat" #end_lat="ngModel" [(ngModel)]="apiService.formData.end_lat" > 
+      <mat-error>{{'Latitude' | translate}} {{'é obrigatório' | translate}}.</mat-error> 
+    </mat-form-field> 
+  </div> 
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Gravar' | translate}}</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i>{{'Cancelar' | translate}}</button> 
+  </div> 
+</div>
+</form> 
+</div> 

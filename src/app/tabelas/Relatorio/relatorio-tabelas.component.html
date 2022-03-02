@@ -1,0 +1,18 @@
+﻿<div class="example-container" align="center">
+  <div class="barheader">RELATÓRIO DE TABELAS</div>
+  <div><p>{{apiService.strParametros}}</p></div>
+      <table class="table table-borderless" align="center" width="100%"> 
+        <thead class="thead-light"> 
+        </thead> 
+        <tbody> 
+          <tr *ngFor="let tabelas of apiService.arrtabelas"> 
+          </tr> 
+          
+        </tbody> 
+      </table> 
+  <div align="right"> 
+     <button [disabled]=true id="btnchart" name="btnchart" class="btn_amarelo" matTooltip="Gráficos" (click)="GoogleChart()"><mat-icon>pie_chart</mat-icon></button> 
+     <button id="btnprint" name="btnprint" class="btn_amarelo" matTooltip="Imprimir" (click)="Imprimir()"><mat-icon>printer</mat-icon></button> 
+     <button id="btnback" name="btnback" class="btn_amarelo" matTooltip="Voltar" (click)="Voltar()"><mat-icon>navigate_before</mat-icon></button> 
+  </div> 
+</div> 

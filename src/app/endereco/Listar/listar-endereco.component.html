@@ -1,0 +1,91 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Endereço' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_CODIGO-->
+    <ng-container matColumnDef="end_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_codigo">{{element.end_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+
+    <!--COLUNA TABELA LISTA END_ENDERECO-->
+    <ng-container matColumnDef="end_endereco"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_endereco">{{'Endereço' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_endereco">{{element.end_endereco | unescape}} </div> </td>
+    </ng-container> 
+   
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_BAIRRO-->
+    <ng-container matColumnDef="end_bairro"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_bairro">{{'Bairro' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_bairro">{{element.end_bairro | unescape}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_CIDADE-->
+    <ng-container matColumnDef="end_cidade"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_cidade">{{'Cidade' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_cidade">{{element.end_cidade | unescape}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_NUMERO-->
+    <ng-container matColumnDef="end_numero"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_numero">{{'Numero' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_numero">{{element.end_numero}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_UF-->
+    <ng-container matColumnDef="end_uf"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_uf">{{'UF' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_uf">{{element.end_uf}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA END_CEP-->
+    <ng-container matColumnDef="end_cep"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.end_cep">{{'CEP' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.end_cep">{{element.end_cep}} </div> </td>
+    </ng-container> 
+    </div>
+
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button *ngIf="permissaoDelete('endereco')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deleteendereco(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editendereco(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <button *ngIf="permissaoInsert('endereco')" type="button" (click)="insertendereco()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelendereco()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+  </div> 
+</div> 
+</div>
+</div>

@@ -1,0 +1,98 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Pedidos' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA PED_CODIGO-->
+    <ng-container matColumnDef="ped_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_codigo">{{element.ped_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+      <!--COLUNA TABELA LISTA PED_CODIGO-->
+      <ng-container matColumnDef="ven_nome"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div>{{'Vendedor' | translate}}</div> </th> 
+        <td mat-cell *matCellDef="let element"> <div>{{element.ven_nome | unescape}} </div> </td>
+      </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+      <!--COLUNA TABELA LISTA PED_CODIGO-->
+      <ng-container matColumnDef="usu_nome"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div>{{'Cliente' | translate}}</div> </th> 
+        <td mat-cell *matCellDef="let element"> <div>{{element.usu_nome | unescape}} </div> </td>
+      </ng-container> 
+    </div>
+    <!--COLUNA TABELA LISTA PED_DATAHORA-->
+    <ng-container matColumnDef="ped_datahora"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_datahora">{{'Data/Hora' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_datahora && element.ped_datahora!='0000-00-00 00:00:00'">{{element.ped_datahora | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+      <div *ngIf="apiService.formVisible.ped_datahora && element.ped_datahora=='0000-00-00 00:00:00'">00/00/0000</div>  </td>
+    </ng-container> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA PED_FORMA_PAGTO-->
+    <ng-container matColumnDef="ped_forma_pagto"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_forma_pagto">{{'Forma Pgto.' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_forma_pagto">{{element.ped_forma_pagto}} </div> </td>
+    </ng-container> 
+    </div>
+
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA PED_TIPO_PAGTO-->
+    <ng-container matColumnDef="ped_tipo_pagto"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_tipo_pagto">{{'Tipo Pagto.' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_tipo_pagto">{{element.ped_tipo_pagto}} </div> </td>
+    </ng-container> 
+    </div>
+
+    <div *ngIf="Device=='D'">
+      <!--COLUNA TABELA LISTA PED_TIPO_PAGTO-->
+      <ng-container matColumnDef="ped_status"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_status">{{'Status' | translate}}</div> </th> 
+        <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_status">{{element.ped_status}} </div> </td>
+      </ng-container> 
+      </div>
+
+    <!--COLUNA TABELA LISTA PED_TOTAL-->
+    <ng-container matColumnDef="ped_total"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ped_total">{{'Total' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ped_total">{{element.ped_total}} </div> </td>
+    </ng-container> 
+
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button *ngIf="permissaoDelete('pedidos')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deletepedidos(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editpedidos(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <button *ngIf="permissaoInsert('pedidos')" type="button" (click)="insertpedidos()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelpedidos()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+  </div> 
+</div> 
+</div>
+</div>

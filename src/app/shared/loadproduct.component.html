@@ -1,0 +1,18 @@
+<form #form="ngForm" autocomplete="off">  
+    <div>
+        <div align="center">
+            <div class="ptitle">{{data.vendedor | unescape}}</div>
+            <div class="pdescription">{{data.categoria | unescape}}</div>
+            <div class="scroll_products2" align="center">
+                <img [src]="data.imagem"/>
+            </div>  
+            <div class="ptitle">{{data.nome | unescape}}</div>
+            <div class="ptitle">{{data.valor | currency:'BRL'}}</div>
+            <div class="ptitle">Estoque {{data.estoque}}</div>
+            <div class="pdescription">{{data.descricao | unescape}}</div>
+        </div>
+    </div>
+    <div align="center" class="barra"><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div>
+  </form>  
+    
+  

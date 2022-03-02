@@ -1,0 +1,11 @@
+﻿ 
+<div [@bounce]="bounce">
+<form #form="ngForm" autocomplete="off" *ngIf="apiService.formParApto" (submit)="onSubmit(form)"> 
+ <hr> 
+ <div class="barheader"class="text-center">{{'FILTRO APONTAMENTO' | translate}} {{'CheckList Pedidos' | translate | uppercase}}</div> 
+ <hr> 
+<div class="button-row"> 
+   <button type="submit" class="btn_amarelo" [disabled]="!validateForm">{{'Consultar' | translate}}</button> 
+</div> 
+</form> 
+</div>

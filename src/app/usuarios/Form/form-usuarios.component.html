@@ -1,0 +1,258 @@
+﻿<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)"> 
+  <div align="center">
+  <div *ngIf="apiService.Formato=='W'">
+    <div class="col-sm-0" align="center"> 
+      <div class="barheader"align="center" class="text-center">{{'PERFIL'}}</div>
+    </div>
+    <mat-horizontal-stepper>
+
+      <ng-template matStepperIcon="done">
+        <mat-icon>done_all</mat-icon>
+      </ng-template>
+
+      <mat-step label="Perfil">
+        <div class="card" align="center">
+          <img class="responsive-25" src="/assets/img/perfil.png" alt="Perfil" title="Perfil">
+          <div align="center">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <div class="info" align="center">
+          <cdk-virtual-scroll-viewport [ngClass]="{'menu-item-medio': Device=='M', 'menu-item-grande': Device=='D'}" itemSize="100" >
+            <p>Para iniciarmos essa experiência incrível, primeiro devemos criar um Perfil, para você dentro da Yumy. </p>            
+          </cdk-virtual-scroll-viewport>
+        </div>
+          <button type="button" mat-button matStepperNext>COMEÇAR...</button>          
+        </div>      
+      </mat-step>
+      <!------------------
+        NOME
+      -------------------->
+      <mat-step label="Nome">
+        <div class="card" align="center">
+        <img id="crop11" src="/assets/img/img1.png" alt="imagens" title="imagens" >        
+        <div class="info" >
+          <cdk-virtual-scroll-viewport class="item-minimo" itemSize="100" >
+            <p>Qual é seu Nome?</p>
+          </cdk-virtual-scroll-viewport>
+        </div>  
+        <div align="center">
+        <mat-icon>code</mat-icon>
+        </div>
+        <div class="example-container" align="center">
+          <mat-form-field> 
+            <input matInput placeholder="{{'NOME' | translate}}" name="usu_nome" #usu_nome="ngModel" [(ngModel)]="apiService.formData.usu_nome"> 
+          </mat-form-field> 
+        </div>
+        <mat-progress-bar mode="determinate" value="0"></mat-progress-bar> 
+        <div>
+          <button type="button" [disabled]="apiService.formData.usu_nome=='' || apiService.formData.usu_nome==null" mat-button matStepperNext>PRÓXIMO...</button>
+        </div>
+      </div>
+      </mat-step>
+      <!------------------
+      LOGIN
+      -------------------->
+      <mat-step label="Login">
+        <div class="card" align="center">
+        <img id="crop11" src="/assets/img/img2.png" alt="imagens" title="imagens">        
+        <div class="info" >
+          <cdk-virtual-scroll-viewport class="item-minimo" itemSize="100" >
+            <p>Crie um Login para acessar posteriormente a Yumy.Use um nome curto para não esquecer depois.</p>
+          </cdk-virtual-scroll-viewport>
+        </div>  
+        <div align="center">
+        <mat-icon>security</mat-icon>
+        </div>
+        <div class="example-container" align="center">
+          <mat-form-field>             
+            <input matInput placeholder="{{'LOGIN' | translate}}" name="usu_login" #usu_login="ngModel" [(ngModel)]="apiService.formData.usu_login" (blur)="validaUsuario(apiService.formData.usu_login)"> 
+            <mat-hint *ngIf="loginErro">ESSE {{'USUÁRIO' | translate}} {{'JÁ EXISTE PARA OUTRO REGISTRO!' | translate}}</mat-hint>
+          </mat-form-field> 
+        </div>
+        <mat-progress-bar mode="determinate" value="33"></mat-progress-bar> 
+        <div>
+          <button type="button" mat-button matStepperPrevious>ANTERIOR...</button>
+          <button type="button" [disabled]="!Valido || apiService.formData.usu_login=='' || apiService.formData.usu_login==null" mat-button matStepperNext>PRÓXIMO...</button>
+        </div>
+      </div>
+      </mat-step>
+      <!------------------
+        SENHA
+      -------------------->
+      <mat-step label="Login">
+        <div class="card" align="center">
+        <img id="crop11" src="/assets/img/img3.png" alt="imagens" title="imagens" >        
+        <div class="info" >
+          <cdk-virtual-scroll-viewport class="item-minimo" itemSize="100" >
+            <p>Agora vamos definir uma senha segura, para logar na Yumy. Escolha uma senha, que possa lembrar depois.</p>
+          </cdk-virtual-scroll-viewport>
+        </div>  
+        <div align="center">
+        <mat-icon>vpn_key</mat-icon>
+        </div>
+        <div class="example-container" align="center">
+          <mat-form-field>             
+            <input type="password" matInput placeholder="{{'SENHA' | translate}}" name="usu_senha" #usu_senha="ngModel" [(ngModel)]="apiService.formData.usu_senha"> 
+          </mat-form-field> 
+        </div>    
+        <mat-progress-bar mode="determinate" value="66"></mat-progress-bar>   
+        <div>
+          <button type="button" mat-button matStepperPrevious>ANTERIOR...</button>
+          <button type="button" [disabled]="apiService.formData.usu_senha=='' || apiService.formData.usu_senha==null" mat-button matStepperNext>PRÓXIMO...</button>
+        </div>
+      </div>
+      </mat-step>
+      <!--
+        EMAIL
+      -->
+      <mat-step label="E-mail" state="done_all">
+        <div class="card" align="center">
+          <img id="crop11" src="/assets/img/img4.png" alt="imagens" title="imagens" >
+        <div class="info" >
+          <cdk-virtual-scroll-viewport class="item-minimo" itemSize="100" >
+            <p>Entre com um e-mail ativo, para recuperar sua senha, caso a esqueça. E também, mantermos um veículo de comunicação inicial.</p>
+          </cdk-virtual-scroll-viewport>
+        </div>  
+        <div align="center">
+          <mat-icon>email</mat-icon>
+        </div>
+        <div class="example-container" align="center">
+          <mat-form-field> 
+            <input matInput type="email" placeholder="E-MAIL*" name="usu_email" #usu_nome="ngModel" [(ngModel)]="apiService.formData.usu_email" (blur)="validaEmail(apiService.formData.usu_email)"> 
+            <mat-hint class="make-red" *ngIf="emailErro">ESSE E-MAIL {{'JÁ EXISTE PARA OUTRO REGISTRO!' | translate}}!</mat-hint>
+          </mat-form-field> 
+        </div>
+        </div>      
+        <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>   
+
+        <div align="center">
+          <button type="button" mat-button matStepperPrevious>ANTERIOR...</button>
+          <button type="submit"  [disabled]="!Valido || apiService.formData.usu_email=='' || apiService.formData.usu_email==null" (click)="onProxProjetos()" mat-button [disabled]="!validateForm">{{'GRAVAR' | translate}}</button> 
+        </div>      
+      </mat-step> 
+  </mat-horizontal-stepper>
+  <!--<div class="example-container" align="center"> 
+    <div class="example-container" align="left"> 
+      <div id="footer"  class="button-row" align="right"> 
+        <button type="submit" class="btn_amarelo" [disabled]="!Valido || !validateForm">{{'Gravar' | translate}}</button>  
+        <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i> {{'Cancelar' | translate}}</button> 
+      </div> 
+    </div>
+  </div> -->
+
+  </div>
+  <!--***********************************************************************
+  ***************************************************************************
+  *****************************N O R M A L **********************************
+  ***************************************************************************
+  ***************************************************************************--> 
+
+  <div *ngIf="apiService.Formato=='T'||apiService.Formato=='C'" align="center">
+ 
+    <div class="barheader" *ngIf="apiService.formData.status_reg=='U'"> EDITAR PERFIL</div> 
+    <div class="barheader" *ngIf="apiService.formData.status_reg=='I'" >PERFIL</div>  
+ 
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="usu_codigo" #usu_codigo="ngModel" [(ngModel)]="apiService.formData.usu_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+  
+  <mat-form-field> 
+      <input matInput type="number" placeholder="Código"  min="0" [disabled]="true" name="usu_codigo" #usu_codigo="ngModel" [(ngModel)]="apiService.formData.usu_codigo" > 
+    </mat-form-field> 
+  </div> 
+
+  <div class="example-container"> 
+    <mat-form-field> 
+      <ngx-mat-file-input (change)="selectFile($event)" placeholder="CLICK AQUI PARA UPLOAD DA FOTO"   name="usu_foto" #usu_foto="ngModel" [(ngModel)]="apiService.formData.usu_foto" (change)="onFileSelect($event)"></ngx-mat-file-input> 
+    </mat-form-field> 
+    <button type="button" class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">ENVIAR FOTO</button>
+    <div > 
+    <div *ngIf="apiService.formData.usu_foto!='[object Object]' && apiService.formData.usu_foto!=null">  <img class="reframe-round" [src]="apiService.formData.usu_foto"/></div> 
+    </div> 
+  </div><hr> 
+
+  <div class="example-container">
+    <mat-form-field> 
+      <input matInput minlength="4" placeholder="Nome" name="usu_nome" #usu_nome="ngModel" [(ngModel)]="apiService.formData.usu_nome" appUnscape> 
+      <mat-error>Nome é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+  
+  <div class="example-container" *ngIf="TipoGrupo=='A'">  
+    <mat-form-field> 
+      <mat-label>Grupo</mat-label>
+      <mat-select name="gus_codigo" #gus_codigo="ngModel" [(ngModel)]="apiService.formData.gus_codigo"> 
+        <mat-option *ngFor="let grupo_usuarios of arrgrupo_usuarios | async" [value]="grupo_usuarios.gus_codigo">
+          {{grupo_usuarios.gus_descricao}} 
+        </mat-option> 
+      </mat-select> 
+      <mat-error>Grupo é obrigatório.</mat-error>
+    </mat-form-field> 
+  </div> 
+
+
+ 
+  <div class="example-container">
+    <mat-form-field> 
+      <input matInput placeholder="Login" name="usu_login" #usu_login="ngModel" [(ngModel)]="apiService.formData.usu_login"> 
+      <mat-error>Login é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+
+ 
+  <div class="example-container">
+    <mat-form-field> 
+      <input matInput type="password" minlength="4" placeholder="Senha" name="usu_senha" #usu_senha="ngModel" [(ngModel)]="apiService.formData.usu_senha"> 
+      <mat-error>Senha é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+
+  <div class="example-container">
+    <mat-form-field> 
+      <input matInput mask="(00)00000-0000" placeholder="Fone/WhatsApp" name="usu_fone" #usu_fone="ngModel" [(ngModel)]="apiService.formData.usu_fone"> 
+      <mat-error>Fone é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+
+  <div class="example-container">
+    <mat-form-field> 
+      <input matInput placeholder="E-mail" name="usu_email" #usu_email="ngModel" [(ngModel)]="apiService.formData.usu_email"> 
+      <mat-error>E-mail é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div>
+
+  <div class="add-bottom-padding" *ngIf="TipoGrupo=='A'">
+    <label class="example-margin"><b>{{'Tipo' | translate}}:</b></label> 
+      <mat-radio-group name="usu_tipo" #usu_tipo="ngModel" [(ngModel)]="apiService.formData.usu_tipo"> 
+        <mat-radio-button value="C" class="example-margin">Comprador</mat-radio-button>
+        <mat-radio-button value="A" class="example-margin">Administrador</mat-radio-button>
+      </mat-radio-group> 
+    </div>  
+
+    
+  <div class="example-container" *ngIf="TipoGrupo=='A'">
+    <mat-form-field> 
+      <input matInput placeholder="Pontos" name="usu_pontos" #usu_pontos="ngModel" [(ngModel)]="apiService.formData.usu_pontos"> 
+      <mat-error>Pontos é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div>
+
+  <div class="example-container" *ngIf="TipoGrupo=='A' || TipoGrupo=='V'"> 
+    <mat-form-field> 
+      <mat-label>Endereço</mat-label>
+      <mat-select name="end_codigo" #end_codigo="ngModel" [(ngModel)]="apiService.formData.end_codigo"> 
+        <mat-option *ngFor="let endereco of arrenderecos | async" [value]="endereco.end_codigo">
+          {{endereco.end_endereco  | unescape}}, {{endereco.end_numero}}, {{endereco.end_bairro  | unescape}}, {{endereco.end_cidade  | unescape}}, {{endereco.end_uf}} 
+        </mat-option> 
+      </mat-select> 
+      <mat-error>Grupo é obrigatório.</mat-error>
+    </mat-form-field> 
+  </div> 
+
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">Gravar</button>  
+    <button type="button" (click)="onCancelar()" class="btn_cinza"><i class="fa fa-close"></i> Cancelar</button> 
+  </div> 
+  </div>
+</div>
+</form> 

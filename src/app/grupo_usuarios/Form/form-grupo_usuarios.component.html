@@ -1,0 +1,35 @@
+﻿<form #form="ngForm" autocomplete="off" *ngIf="apiService.formData" (submit)="onSubmit(form)">  
+  <hr>  
+  <div align="center">
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='U'" class="text-center">EDITAR GRUPO DE USUÁRIOS</div> 
+  <div class="barheader"*ngIf="apiService.formData.status_reg=='I'" class="text-center">INSERIR GRUPO DE USUÁRIOS</div>  
+  <hr>  
+  <input *ngIf="apiService.formData.status_reg=='I'" type="hidden"  name="gus_codigo" #gus_codigo="ngModel" [(ngModel)]="apiService.formData.gus_codigo"> 
+  <div class="example-container" *ngIf="apiService.formData.status_reg=='U'"> 
+    <mat-form-field> 
+      <input matInput type="number" placeholder="Código"  min="0" [disabled]="true" name="gus_codigo" #gus_codigo="ngModel" [(ngModel)]="apiService.formData.gus_codigo" > 
+    </mat-form-field> 
+  </div> 
+        <div class="example-container">
+    <mat-form-field> 
+      <input matInput placeholder="Descrição" name="gus_descricao" #gus_descricao="ngModel" [(ngModel)]="apiService.formData.gus_descricao"> 
+      <mat-error>Descrição é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div> 
+
+  
+  <div class="add-bottom-padding">
+    <label class="example-margin"><b>{{'Tipo' | translate}}:</b></label> 
+      <mat-radio-group name="gus_tipo" #gus_tipo="ngModel" [(ngModel)]="apiService.formData.gus_tipo"> 
+        <mat-radio-button value="A" class="example-margin">Administradores</mat-radio-button>
+        <mat-radio-button value="C" class="example-margin">Compradores</mat-radio-button>
+      </mat-radio-group> 
+    </div>  
+
+ 
+  <div class="button-row"> 
+    <button type="submit" class="btn_amarelo" [disabled]="!validateForm">Gravar</button>  
+    <button type="button" (click)="onCancelar()" class="btn_amarelo"><i class="fa fa-close"></i> Cancelar</button> 
+  </div> 
+</div>
+</form> 

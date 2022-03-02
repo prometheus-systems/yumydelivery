@@ -1,0 +1,25 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off">  
+    <div class="example-container" align="center">
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+            <h4><b><p>{{'cadastro de' | translate | uppercase}} {{'Endereço' | translate | uppercase}} </p></b></h4> 
+              <p>{{'Endereço' | translate}}</p> 
+              <h6><p><b>{{'CAMPOS' | translate}}:</b></p></h6> 
+              <p><b>{{'Bairro' | translate}}: </b>{{'Bairro' | translate}}</p> 
+              <p><b>{{'CEP' | translate}}: </b>{{'CEP' | translate}}</p> 
+              <p><b>{{'Cidade' | translate}}: </b>{{'Cidade' | translate}}</p> 
+              <p><b>{{'Código' | translate}}: </b>{{'Codigo' | translate}}</p> 
+              <p><b>{{'Complemento' | translate}}: </b>{{'Complemento do Endereço' | translate}}</p> 
+              <p><b>{{'Endereço' | translate}}: </b>{{'Endereço' | translate}}</p> 
+              <p><b>{{'Latitude' | translate}}: </b>{{'Latitude' | translate}}</p> 
+              <p><b>{{'Longitude' | translate}}: </b>{{'Longitude' | translate}}</p> 
+              <p><b>{{'Numero' | translate}}: </b>{{'Numero' | translate}}</p> 
+              <p><b>{{'Referencia' | translate}}: </b>{{'Referencia' | translate}}</p> 
+              <p><b>{{'UF' | translate}}: </b>{{'UF' | translate}}</p> 
+
+        </cdk-virtual-scroll-viewport> 
+    </div>  
+    <hr> 
+    <div><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div> 
+  </form> 
+</div>

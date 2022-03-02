@@ -1,0 +1,66 @@
+﻿<div class="example-container" align="center">
+  <div align="center"><div class="barheader">USUARIOS</div>
+  <hr>
+  <mat-form-field> 
+      <div class="row">
+        <div class="col-sm">   
+          <input matInput type="search" (keyup)="applyFilter($event.target.value)" placeholder="CONSULTAR" >
+        </div>
+        <div class="col-sm">  
+          <mat-icon>search</mat-icon>
+        </div>
+      </div>   
+    </mat-form-field> 
+  <div> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <!--COLUNA TABELA LISTA USU_CODIGO-->
+    <ng-container matColumnDef="usu_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th> 
+      <td mat-cell *matCellDef="let element"> {{element.usu_codigo}} </td>
+    </ng-container> 
+    <!--COLUNA TABELA LISTA USU_NOME-->
+    <ng-container matColumnDef="usu_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th> 
+      <td mat-cell *matCellDef="let element"> {{element.usu_nome | unescape}} </td>
+    </ng-container> 
+
+    <!--COLUNA TABELA LISTA USU_LOGIN-->
+    <ng-container matColumnDef="usu_fone"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fone </th> 
+      <td mat-cell *matCellDef="let element"> {{element.usu_fone}} </td>
+    </ng-container>
+    
+    <!--COLUNA TABELA LISTA USU_EMAIL-->
+    <ng-container matColumnDef="usu_email"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th> 
+      <td mat-cell *matCellDef="let element"> {{element.usu_email}} </td>
+    </ng-container> 
+
+    <!--COLUNA TABELA LISTA GUS_DESCRICAO-->
+    <ng-container matColumnDef="gus_descricao"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo</th> 
+      <td mat-cell *matCellDef="let element"> {{element.gus_descricao}} </td>
+    </ng-container> 
+    <ng-container matColumnDef="usu_foto"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div>{{'Imagem' | translate}}</div> </th> 
+      <td><mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"><img class="reframe-round" [src]="element.usu_foto" (click)="onClickViewImage(element.usu_foto)"/> </mat-cell></td>
+    </ng-container> 
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <button mat-icon-button matTooltip="Excluir" aria-label="Excluir registro" (click)="deleteusuarios(element)"> 
+            <mat-icon>delete</mat-icon> 
+          </button> 
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editusuarios(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div>
+    <button type="button" (click)="insertusuarios()" class="btn_amarelo" ><i class="fa fa-close"></i>Adicionar</button>
+    <button type="button" (click)="filtrorelusuarios()" class="btn_amarelo" ><i class="fa fa-close"></i>Relatório</button>
+    <button type="button" (click)="importarCompradores()" class="btn_amarelo" >Importar</button>
+  </div> 
+</div> 

@@ -1,0 +1,26 @@
+<app-loader></app-loader>
+<!--<div align="center" class="principal-container">
+  <div align="center" class="btn-group">
+      <button *ngFor="let lang of supportedLangs"
+          (click)="selectLang(lang.value)"
+          class="btn btn-default" [class.btn-primary]="isCurrentLang(lang.value)">
+          {{ lang.display }}
+      </button>
+  </div>
+  </div>-->
+<div align="center">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="login_card">
+      <div><img src="assets/img/logo.png"></div>
+      <div><button type="button" *ngIf="Device=='D'" (click)="signInWithFB()" class="fa-facebook">Entrar com o facebook</button></div>
+      <div><button type="button" *ngIf="Device=='M'" (click)="loginGoogleExt()" class="fa-google">Entrar com o Google</button></div>
+      <div><button type="button" *ngIf="Device=='D'" (click)="signInWithGoogle()" class="fa-google">Entrar com o Google</button></div>
+      <div><input class="input-branco" placeholder="{{'LOGIN' | translate}}" formControlName="login" required></div>
+      <div><input class="input-branco" type="password" placeholder="{{'SENHA' | translate}}" formControlName="senha" required></div>
+      <button (click)="registrar()" class="btn_cinza">{{'Registre-se' | translate}}</button>&nbsp;&nbsp;
+      <button class="btn_branco" [disabled]="loginForm.invalid">{{'Login' | translate}}</button><br/>
+      
+      <div class="espaco"></div>
+    </div>
+    </form>
+</div>

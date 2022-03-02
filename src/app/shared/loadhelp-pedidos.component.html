@@ -1,0 +1,28 @@
+﻿<div [@bounce]="bounce">
+  <form #form="ngForm" autocomplete="off">  
+    <div class="example-container" align="center">
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+            <h4><b><p>{{'cadastro de' | translate | uppercase}} {{'Pedidos' | translate | uppercase}} </p></b></h4> 
+              <p>{{'Pedido executado pelo cliente' | translate}}</p> 
+              <h6><p><b>{{'CAMPOS' | translate}}:</b></p></h6> 
+              <p><b>{{'Código' | translate}}: </b>{{'Codigo' | translate}}</p> 
+              <p><b>{{'Data/Hora' | translate}}: </b>{{'Data e Hora do Pedido' | translate}}</p> 
+              <p><b>{{'Data/Hora Pronto' | translate}}: </b>{{'Data/Hora Pronto' | translate}}</p> 
+              <p><b>{{'Data/Hora Entregue' | translate}}: </b>{{'Data/Hora que o pedido foi entregue' | translate}}</p> 
+              <p><b>{{'Forma Pgto.' | translate}}: </b>{{'Forma de Pagamento' | translate}}</p> 
+              <p><b>{{'Data/Hora Retirado' | translate}}: </b>{{'Data/Hora que saiu para Entrega' | translate}}</p> 
+              <p><b>{{'Status' | translate}}: </b>{{'
+Status do Pedido' | translate}}</p> 
+              <p><b>{{'Tipo Pagto.' | translate}}: </b>{{'Tipo do Pagamento' | translate}}</p> 
+              <p><b>{{'Total' | translate}}: </b>{{'Total do Pedido' | translate}}</p> 
+              <p><b>{{'Usar Bonificação' | translate}}: </b>{{'Usar Bonificação pontuação de Compras' | translate}}</p> 
+              <h6><b><p>{{'Itens' | translate}}</p> </b></h6>
+              <p>{{'Itens' | translate}}</p> 
+              <p><b>{{'Cardápio' | translate}}: </b>{{'Cardapio' | translate}}</p> 
+
+        </cdk-virtual-scroll-viewport> 
+    </div>  
+    <hr> 
+    <div><button class="btn_amarelo3" type="button" [mat-dialog-close]><mat-icon>close</mat-icon></button></div> 
+  </form> 
+</div>

@@ -1,0 +1,59 @@
+﻿<div [@bounce]="bounce">
+<div class="barheader" align="center">Adicionar ao Carrinho</div>  
+<hr>  
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">  
+  <div align="center">
+  <cdk-virtual-scroll-viewport [ngClass]="{'item-peq':Device=='M', 'item-nor':Device=='D'}" itemSize="200" >  
+  <input type="hidden"  name="ped_codigo" #ped_codigo="ngModel" [(ngModel)]="formData.ped_codigo">  
+  <input type="hidden"  name="ite_codigo" #ite_codigo="ngModel" [(ngModel)]="formData.ite_codigo">  
+  <div *ngIf="TipoGrupo!='C'">
+    <div class="example-container" align="center">  
+        <mat-label>Cardápio</mat-label>
+        <select name="car_codigo" #car_codigo="ngModel" [(ngModel)]="formData.car_codigo" class="browser-default custom-select" (change)="updateItemsitens($event.target)"> 
+          <option *ngFor="let cardapio of arrcardapio | async" [value]="cardapio.car_codigo">
+            {{cardapio.car_nome | unescape}} 
+          </option> 
+        </select> 
+    </div> 
+    <hr>  
+      <div class="example-container"> 
+      <mat-form-field> 
+        <input matInput [readonly]="true" type="number" min="0.0" placeholder="Preco"   name="ite_preco" #ite_preco="ngModel" [(ngModel)]="formData.ite_preco" (keyup)="atualizarSubTotal()"> 
+      </mat-form-field> 
+    </div>
+  </div>  
+  <div *ngIf="TipoGrupo=='C'">
+    <input type="hidden"  name="ite_preco" #ite_preco="ngModel" [(ngModel)]="formData.ite_preco">  
+    <input type="hidden"  name="car_codigo" #car_codigo="ngModel" [(ngModel)]="formData.car_codigo">  
+    <input type="hidden"  name="car_nome" #car_nome="ngModel" [(ngModel)]="formData.car_nome">  
+    
+      <div align="center" class="scroll_products2" *ngIf="!teclado">
+        <img [src]="data.imagem">
+      </div>
+      <div class="ptitle">{{data.nome | unescape}}</div>
+      <div class="pdescription" *ngIf="Device=='D'">{{data.descricao | unescape}}</div>
+      <div class="pprice" *ngIf="Device=='D'">R$ {{data.valor}}</div>
+    
+    
+  </div>  
+  <div class="example-container"> 
+    <mat-form-field> 
+      <input matInput type="number" (focus)="focusFunction()" (focusout)="focusOutFunction()" placeholder="Qtde"  min="0" name="ite_qtde" #ite_qtde="ngModel" [(ngModel)]="formData.ite_qtde" (change)="atualizarSubTotal()"> 
+      <mat-error>Qtde é obrigatório.</mat-error> 
+    </mat-form-field> 
+  </div>
+  <div class="example-container">
+    <mat-form-field> 
+      <input [readonly]="true" matInput type="number" min="0.0" placeholder="Subtotal"   name="ite_subtotal" #ite_subtotal="ngModel" [(ngModel)]="formData.ite_subtotal" > 
+    </mat-form-field> 
+  </div> 
+  <div class="teclado" *ngIf="teclado && Device=='M'"></div>
+  </cdk-virtual-scroll-viewport>  
+  
+  <div class="form-group">  
+    <button type="submit" class="btn_amarelo_grande" [disabled]="!validateForm">Adicionar ao Carrinho</button>  
+    <button type="button" class="btn_amarelo" [mat-dialog-close]><i class="fa fa-close"></i>Cancelar</button>  
+  </div> 
+</div> 
+</form>  
+</div>  

@@ -1,0 +1,100 @@
+﻿<div [@bounce]="bounce">
+<div class="example-container" align="center">
+  <hr> 
+  <div class="barheader">{{'Vendedores' | translate | uppercase}}</div>
+  <hr>
+  <div> 
+  <div class="example-container" align="center"> 
+    <div class="row">  
+      <div class="col-sm-0" *ngIf="Device=='D'">  
+        <mat-icon>menu_book</mat-icon>  
+      </div> 
+      <div class="col-sm"> 
+        <input class="browser-default custom-select" type="search" (keyup)="applyFilter($event.target.value)" placeholder="{{'CONSULTAR' | translate}}" > 
+      </div> 
+      <div class="col-sm-0" *ngIf="Device=='D'"> 
+        <mat-icon>search</mat-icon> 
+      </div> 
+    </div> 
+  </div> 
+  <div class="example-container" align="center"> 
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%"> 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_CODIGO-->
+    <ng-container matColumnDef="ven_codigo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_codigo">{{'Código' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_codigo">{{element.ven_codigo}} </div> </td>
+    </ng-container> 
+    </div>
+    
+    <!--COLUNA TABELA LISTA VEN_NOME-->
+    <ng-container matColumnDef="ven_nome"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_nome">{{'Nome' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_nome">{{element.ven_nome | unescape}} </div> </td>
+    </ng-container> 
+ 
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_CNPJ-->
+    <ng-container matColumnDef="ven_cnpj"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_cnpj">{{'CNPJ' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_cnpj">{{element.ven_cnpj}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_FONE-->
+    <ng-container matColumnDef="ven_fone"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_fone">{{'Fone' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_fone">{{element.ven_fone}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_EMAIL-->
+    <ng-container matColumnDef="ven_email"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_email">{{'E-mail' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_email">{{element.ven_email}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_HORARIO-->
+    <ng-container matColumnDef="ven_horario"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_horario">{{'Horário de Funcionamento' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_horario">{{element.ven_horario}} </div> </td>
+    </ng-container> 
+    </div>
+    <div *ngIf="Device=='D'">
+    <!--COLUNA TABELA LISTA VEN_ATIVO-->
+    <ng-container matColumnDef="ven_ativo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div *ngIf="apiService.formVisible.ven_ativo">{{'Ativo' | translate}}</div> </th> 
+      <td mat-cell *matCellDef="let element"> <div *ngIf="apiService.formVisible.ven_ativo"><mat-icon *ngIf="element.ven_ativo">checked</mat-icon></div> </td>
+    </ng-container> 
+
+    <ng-container matColumnDef="ven_logo"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <div>{{'Imagem' | translate}}</div> </th> 
+      <td><mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"><img class="reframe-round" [src]="element.ven_logo" (click)="onClickViewImage(element.ven_logo)"/> </mat-cell></td>
+    </ng-container> 
+    </div>
+      <ng-container matColumnDef="buttons"> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell> 
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> 
+          <div *ngIf="TipoGrupo=='A'">
+            <button *ngIf="permissaoDelete('vendedores')" mat-icon-button matTooltip="{{'Excluir' | translate}}" aria-label="Excluir registro" (click)="deletevendedores(element)"> 
+              <mat-icon>delete</mat-icon> 
+            </button> 
+          </div>
+        </mat-cell>  
+      </ng-container> 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editvendedores(row)"></tr> 
+    </table> 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+  </div> 
+  <div style="margin-top:20px">
+    <div *ngIf="TipoGrupo=='A'">
+    <button *ngIf="permissaoInsert('vendedores')" type="button" (click)="insertvendedores()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Adicionar' | translate}}</button>
+    <button type="button" (click)="filtrorelvendedores()" class="btn_amarelo" ><i class="fa fa-close"></i>{{'Relatório' | translate}}</button>
+    <button type="button" (click)="importarVendedores()" class="btn_amarelo" >Importar</button>
+  </div>  
+  </div> 
+</div> 
+</div>
+</div>
